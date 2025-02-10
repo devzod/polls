@@ -4,8 +4,173 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04189d7881e0b35c5a11abaa8b3b9565",
+    "content-hash": "4636bd8374d9db25d5f9be99f2b4040a",
     "packages": [
+        {
+            "name": "akbarali/action-data",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akbarali1/action-data.git",
+                "reference": "8537196dbc242773ba376ddd5dee77372613f4fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akbarali1/action-data/zipball/8537196dbc242773ba376ddd5dee77372613f4fa",
+                "reference": "8537196dbc242773ba376ddd5dee77372613f4fa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "illuminate/contracts": ">=8.10.0",
+                "illuminate/http": ">=8.10.0",
+                "illuminate/support": ">=7",
+                "illuminate/validation": ">=8.10.0",
+                "roave/security-advisories": "dev-latest"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Akbarali\\ActionData\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Akbarali",
+                    "email": "github@akbarali.uz",
+                    "homepage": "https://github.com/akbarali1"
+                }
+            ],
+            "description": "Action Data Validate PHP Laravel",
+            "keywords": [
+                "laravel",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/akbarali1/action-data/issues",
+                "source": "https://github.com/akbarali1/action-data/tree/1.4.1"
+            },
+            "time": "2024-12-27T13:55:08+00:00"
+        },
+        {
+            "name": "akbarali/data-object",
+            "version": "2.8.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akbarali1/data-object.git",
+                "reference": "3cb6aa6039223b9c724caa43326d6a1556e264c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akbarali1/data-object/zipball/3cb6aa6039223b9c724caa43326d6a1556e264c7",
+                "reference": "3cb6aa6039223b9c724caa43326d6a1556e264c7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "laravel/framework": "^9.0|^10.0|^11.0",
+                "roave/security-advisories": "dev-latest"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Akbarali\\DataObject\\DataObjectProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Akbarali\\DataObject\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Akbarali",
+                    "email": "github@akbarali.uz",
+                    "homepage": "https://github.com/akbarali1"
+                }
+            ],
+            "description": "Data Object PHP Laravel",
+            "keywords": [
+                "laravel",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/akbarali1/data-object/issues",
+                "source": "https://github.com/akbarali1/data-object/tree/2.8.6"
+            },
+            "time": "2025-02-01T12:46:56+00:00"
+        },
+        {
+            "name": "akbarali/view-model",
+            "version": "2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akbarali1/view-model.git",
+                "reference": "28a1024de713a3b9a625b54723a8b6ffcfaa5441"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akbarali1/view-model/zipball/28a1024de713a3b9a625b54723a8b6ffcfaa5441",
+                "reference": "28a1024de713a3b9a625b54723a8b6ffcfaa5441",
+                "shasum": ""
+            },
+            "require": {
+                "akbarali/data-object": ">=1",
+                "php": ">=8.0",
+                "ramsey/uuid": ">=3.9"
+            },
+            "require-dev": {
+                "illuminate/contracts": ">=8.10.0",
+                "illuminate/database": ">=7",
+                "illuminate/http": ">=8.10.0",
+                "illuminate/pagination": ">=8.10.0",
+                "illuminate/support": ">=7",
+                "roave/security-advisories": "dev-latest",
+                "symfony/serializer": "^v6.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Akbarali\\ViewModel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Akbarali",
+                    "email": "github@akbarali.uz",
+                    "homepage": "https://github.com/akbarali1"
+                }
+            ],
+            "description": "View Model PHP Laravel",
+            "keywords": [
+                "laravel",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/akbarali1/view-model/issues",
+                "source": "https://github.com/akbarali1/view-model/tree/2.1"
+            },
+            "time": "2024-12-27T13:57:56+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.12.1",

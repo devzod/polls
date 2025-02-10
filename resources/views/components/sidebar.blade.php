@@ -1,31 +1,38 @@
 <div class="page-sidebar">
-    <a class="logo-box" href="#">
-        <span><img src="assets/images/logo-white.png" alt=""></span>
+    <a class="logo-box" href="{{route('dashboard.index')}}">
+        <span><img src="{{asset("assets/images/logo-white.png")}}" alt=""></span>
         <i class="ion-aperture" id="fixed-sidebar-toggle-button"></i>
         <i class="ion-ios-close-empty" id="sidebar-toggle-button-close"></i>
     </a>
     <div class="page-sidebar-inner">
         <div class="page-sidebar-menu">
             <ul class="accordion-menu">
-                <li class="active">
-                    <a href="#">
-                        <i class="fa fa-tachometer"></i>
-                        <span>Dashboard</span>
-                    </a>
+                <li @if(request()->routeIs('dashboard.*')) class="active" @endif>
+                    <a href="{{route('dashboard.index')}}"><i class="fa fa-tachometer"></i><span>{{__('form.dashboard')}}</span></a>
                 </li>
-                <li>
-                    <a href="javascript:void(0)"><i class="fa fa-envelope-o"></i>
-                        <span>Mailbox</span><span class="badge-warning ft-right">10+</span></a>
-                    <ul class="sub-menu">
-                        <li><a href="mailbox.html">Inbox</a></li>
-                        <li><a href="mailbox-message.html">View Mail</a></li>
-                        <li><a href="mailbox-compose.html">Compose Mail</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="widgets.html"><i class="fa fa-object-group"></i>
-                        <span>Widgets</span><span class="badge-info ft-right">Hot</span></a>
-                </li>
+                @canany(['roles.index','permissions.index','users.index', 'languages.index'])
+                    <li class="@if(request()->routeIs('roles.*','permissions.*','users.*')) active open @endif">
+                        <a href="javascript:void(0);"><i class="fa fa-cogs"></i>
+                            <span>{{__('form.settings')}}</span><i class="accordion-icon fa fa-angle-left"></i></a>
+                        <ul class="sub-menu" style="display:block">
+                            @can('users.index')
+                                <li @if(request()->routeIs('users.*')) class="active" @endif >
+                                    <a href="{{ route('users.index') }}"><i class="fa fa-user"></i>{{__('form.users.users')}}</a>
+                                </li>
+                            @endcan
+                            @can('roles.index')
+                                <li @if(request()->routeIs('roles.*')) class="active" @endif>
+                                    <a href="{{ route('roles.index') }}"><i class="fa fa-shield"></i>{{__('form.roles.roles')}}</a>
+                                </li>
+                            @endcan
+                            @can('permissions.index')
+                                <li @if(request()->routeIs('permissions.*')) class="active" @endif>
+                                    <a href="{{ route(('permissions.index')) }}"><i class="fa fa-unlock"></i>{{__('form.permissions.permissions')}}</a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
                 <li>
                     <a href="javascript:void(0);"><i class="fa fa-clone"></i>
                         <span>Layouts</span><i class="accordion-icon fa fa-angle-left"></i></a>

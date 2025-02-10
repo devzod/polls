@@ -1,4 +1,4 @@
-<div class="color-switcher hide-color-switcher">
+<div class="color-switcher hide-color-switcher d-none">
     <a class="switcher-button"><i class="fa fa-cog fa-spin"></i></a>
     <div class="color-switcher-title">
         <span class="tx-16 text-center">Color Switcher</span>

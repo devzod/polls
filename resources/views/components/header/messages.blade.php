@@ -11,7 +11,7 @@
         <li class="messages-box">
             <div class="row">
                 <div class="col-lg-3 col-sm-3 col-3 text-center">
-                    <img src="assets/images/avatar/avatar.png"
+                    <img src="{{asset("assets/images/avatar/avatar.png")}}"
                          class="mg-10 w-100 rounded-circle" alt="">
                 </div>
                 <div class="col-lg-8 col-sm-8 col-8">
