@@ -10,8 +10,8 @@
                 <li @if(request()->routeIs('dashboard.*')) class="active" @endif>
                     <a href="{{route('dashboard.index')}}"><i class="fa fa-tachometer"></i><span>{{__('form.dashboard')}}</span></a>
                 </li>
-                @canany(['roles.index','permissions.index','users.index', 'languages.index'])
-                    <li class="@if(request()->routeIs('roles.*','permissions.*','users.*')) active open @endif">
+                @canany(['roles.index','permissions.index','users.index', 'languages.index', 'regions.index'])
+                    <li class="@if(request()->routeIs('roles.*','permissions.*','users.*', 'languages.*', 'regions.*')) active open @endif">
                         <a href="javascript:void(0);"><i class="fa fa-cogs"></i>
                             <span>{{__('form.settings')}}</span><i class="accordion-icon fa fa-angle-left"></i></a>
                         <ul class="sub-menu" style="display:block">
@@ -27,12 +27,17 @@
                             @endcan
                             @can('permissions.index')
                                 <li @if(request()->routeIs('permissions.*')) class="active" @endif>
-                                    <a href="{{ route(('permissions.index')) }}"><i class="fa fa-unlock"></i>{{__('form.permissions.permissions')}}</a>
+                                    <a href="{{ route(('permissions.index')) }}"><i class="fa fa-lock"></i>{{__('form.permissions.permissions')}}</a>
                                 </li>
                             @endcan
                                 @can('languages.index')
                                     <li @if(request()->routeIs('languages.*')) class="active" @endif>
                                         <a href="{{ route(('languages.index')) }}"><i class="fa fa-language"></i>{{__('content.languages')}}</a>
+                                    </li>
+                                @endcan
+                                @can('regions.index')
+                                    <li @if(request()->routeIs('regions.*')) class="active" @endif>
+                                        <a href="{{ route(('regions.index')) }}"><i class="fa fa-location-arrow "></i>{{__('form.region.regions')}}</a>
                                     </li>
                                 @endcan
                         </ul>

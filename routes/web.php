@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,16 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
         Route::get('edit/{id}', 'edit')->name('edit')->can('languages.update');
         Route::put('/update/{id}', 'update')->name('update')->can('languages.update');
         Route::get('delete/{id}', 'delete')->name('delete')->can('languages.delete');
+    });
+
+    // Regions
+    Route::controller(RegionController::class)->name('regions.')->prefix('regions')->group(function () {
+        Route::get('index', 'index')->name('index')->can('regions.index');
+        Route::get('create', 'create')->name('create')->can('regions.store');
+        Route::post('/store', 'store')->name('store')->can('regions.store');
+        Route::get('edit/{id}', 'edit')->name('edit')->can('regions.update');
+        Route::put('/update/{id}', 'update')->name('update')->can('regions.update');
+        Route::get('delete/{id}', 'delete')->name('delete')->can('regions.delete');
     });
 
     // Permissions

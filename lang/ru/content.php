@@ -1,4 +1,6 @@
 <?php
 return [
-    'languages' => "Язык"
+    'languages' => "Язык",
+    'active' => 'активный',
+    'disabled' => 'отключенный',
 ];

@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="form-row col-md-12">
-                            <img class="img-thumbnail" src="{{asset('storage').$item->icon}}" alt="icon">
+                            <img class="img-thumbnail" width="100" src="{{asset('storage/').$item->icon}}" alt="icon">
                             <div class="col-md-12 mb-3">
                                 <label for="name">{{ __('validation.attributes.icon') }}</label>
                                 <input type="file" class="form-control" id="icon" name="icon">

@@ -6,10 +6,10 @@
             <div class="card mb-4 shadow-1">
                 <div class="card-header">
                     <h4 class="card-header-title">
-                        {{ __('form.locale.langs') }}
+                        {{ __('form.region.regions') }}
                     </h4>
-                    @can('languages.store')
-                        <a href="{{ route("languages.create") }}" class="btn btn-outline-success">
+                    @can('regions.store')
+                        <a href="{{ route("regions.create") }}" class="btn btn-outline-success">
                             <i class="fa fa-plus button-2x"> {{ __('form.add') }}</i></a>
                     @endcan
                 </div>
@@ -19,9 +19,9 @@
                         <tr>
                             <th>#</th>
                             <th>{{ __('validation.attributes.name') }}</th>
-                            <th>{{ __('form.locale.code') }}</th>
+                            <th>{{ __('validation.attributes.status') }}</th>
                             <th>{{ __('validation.attributes.created_at') }}</th>
-                            @canany(['languages.update','languages.delete'])
+                            @canany(['regions.update','regions.delete'])
                                 <th>{{ __('form.actions') }}</th>
                             @endcanany
                         </tr>
@@ -31,15 +31,15 @@
                             <tr>
                                 <th scope="row">{{ ($pagination->currentpage()-1) * $pagination->perpage() + $loop->index + 1 }}</th>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->code }}</td>
+                                <td><span class="badge badge-pill {{$item->active_class}}">{{ $item->active_text }}</span></td>
                                 <td>{{ $item->created_at }}</td>
                                 <td>
-                                    @can('languages.update')
-                                        <a href="{{ route("languages.edit", [$item->id]) }}">
+                                    @can('regions.update')
+                                        <a href="{{ route("regions.edit", [$item->id]) }}">
                                             <i class="fa fa-edit text-purple button-2x"></i></a>
                                     @endcan
-                                    @can('languages.delete')
-                                        <a href="{{ route("languages.delete", [$item->id]) }}" class=""
+                                    @can('regions.delete')
+                                        <a href="{{ route("regions.delete", [$item->id]) }}" class=""
                                            onclick="return confirm(this.getAttribute('data-message'));"
                                            data-message="{{ __('form.confirm_delete') }}">
                                             <i class="fa fa-trash-o text-danger button-2x"></i>

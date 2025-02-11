@@ -11,7 +11,7 @@ class LanguageSeeder extends Seeder
       protected array $languages = [
         ['name' => 'Русский', 'code' => 'ru', 'icon' => 'flags/ru.png'],
         ['name' => "O'zbek", 'code' => 'uz', 'icon' => 'flags/uz.png'],
-        ['name' => 'English', 'code' => 'en', 'icon' => 'flags/en.png'],
+//        ['name' => 'English', 'code' => 'en', 'icon' => 'flags/en.png'],
       ];
     /**
      * Run the database seeds.

@@ -7,6 +7,9 @@ use Akbarali\DataObject\DataObjectCollection;
 use App\ActionData\Language\CreateLanguageActionData;
 use App\DataObjects\Language\LanguageData;
 use App\Models\Language;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -46,10 +49,11 @@ class LanguageService
     {
         $actionData->validateException();
         $icon = $actionData->code . '.' . $actionData->icon->getClientOriginalExtension();
-        $path = $actionData->icon->storeAs('public/flags', $icon);
+        $path = $actionData->icon->storeAs('flags', $icon, 'public');
         $data = $actionData->all();
-        $data['icon'] = $path;
+        $data['icon'] = '/'.$path;
         $lang = Language::query()->create($data);
+        $this->setLanguageToCache();
         return LanguageData::createFromEloquentModel($lang);
     }
 
@@ -64,8 +68,18 @@ class LanguageService
     {
         $actionData->validateException();
         $lang = $this->getOne($id);
-        $lang->fill($actionData->all());
+        $lang->name = $actionData->name;
+        $lang->code = $actionData->code;
+        if($actionData->icon) {
+            if(Storage::disk('public')->exists($lang->icon)) {
+                Storage::disk('public')->delete($lang->icon);
+            }
+            $icon = $actionData->code . '.' . $actionData->icon->getClientOriginalExtension();
+            $path = $actionData->icon->storeAs('flags', $icon, 'public');
+            $lang->icon = '/'.$path;
+        }
         $lang->save();
+        $this->setLanguageToCache();
     }
 
     /**
@@ -75,7 +89,11 @@ class LanguageService
     public function delete(int $id): void
     {
         $lang = $this->getOne($id);
+        if(Storage::disk('public')->exists($lang->icon)) {
+            Storage::disk('public')->delete($lang->icon);
+        }
         $lang->delete();
+        $this->setLanguageToCache();
     }
 
     /**
@@ -85,5 +103,25 @@ class LanguageService
     protected function getOne(int $id): Language
     {
         return Language::query()->findOrFail($id);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAll(): Collection
+    {
+        if(!Cache::has('languages')) {
+            $this->setLanguageToCache();
+        }
+        return Cache::get('languages');
+    }
+
+    private function setLanguageToCache(): void
+    {
+        $locales = Language::query()->where('active', '=', true)->get();
+        $locales->transform(function (Language $language) {
+            return LanguageData::createFromEloquentModel($language);
+        });
+        Cache::put('languages', $locales);
     }
 }

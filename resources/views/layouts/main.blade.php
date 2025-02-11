@@ -57,20 +57,36 @@
 <script src="{{asset("assets/js/custom.js")}}"></script>
 <script>
     // Toster Notification
-    // $(document).ready(function () {
-    //     setTimeout(function () {
-    //         toastr.options = {
-    //             positionClass: 'toast-top-right',
-    //             closeButton: true,
-    //             progressBar: true,
-    //             showMethod: 'slideDown',
-    //             timeOut: 5000
-    //         };
-    //         toastr.info('Multipurpose Admin Template', 'Hi, welcome to Adminify');
-    //
-    //     }, 300);
-    //
-    // });
+    $(document).ready(function () {
+        @if($errors->has('error'))
+        setTimeout(function () {
+            toastr.options = {
+                positionClass: 'toast-top-right',
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                type: 'danger',
+                message: 'Multipurpose Admin Template', 'Hi, welcome to Adminify',
+                timeOut: 4000
+            };
+            toastr.info("{{$errors->get('error')}}");
+
+        }, 300);
+        @endif
+        @if(session()->has('success'))
+        setTimeout(function () {
+            toastr.options = {
+                positionClass: 'toast-top-right',
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 4000
+            };
+            toastr.success("{{ session()->get('success') }}");
+
+        }, 300);
+        @endif
+    });
 
 </script>
 @yield('js')

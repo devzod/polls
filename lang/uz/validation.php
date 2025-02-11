@@ -146,7 +146,8 @@ return [
         'to' => "Tugash sanasi ",
         'photo' => "Profil rasmi",
         'icon' => 'Ikonka',
-        'code' => 'Kod'
+        'code' => 'Kod',
+        'status' => 'Status',
 
     ],
 

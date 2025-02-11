@@ -21,10 +21,18 @@ return [
     ],
 
     'locale' => [
-        'lang' => 'Tillar',
+        'langs' => 'Tillar',
+        'lang' => 'Til',
         'code' => 'Kod',
         'add' => "Til qo'shish",
         'edit' => "Til o'zgartirish",
+    ],
+
+    'region' => [
+        'regions' => "Регионы",
+        'region' => "Регион",
+        'add' => "Добавить регион",
+        'edit' => "Редактировать регион",
     ],
 
     'files' => [
