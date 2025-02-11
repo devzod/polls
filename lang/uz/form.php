@@ -19,6 +19,14 @@ return [
         "add_permission" => "Ruxsat qo'shish",
         "edit_permission" => "Ruxsatni tahrirlash",
     ],
+
+    'locale' => [
+        'lang' => 'Tillar',
+        'code' => 'Kod',
+        'add' => "Til qo'shish",
+        'edit' => "Til o'zgartirish",
+    ],
+
     'files' => [
         'files' => 'Fayllar',
         'file' => 'Fayl',

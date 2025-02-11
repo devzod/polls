@@ -144,7 +144,10 @@ return [
         'entry_date' => 'Yaroqlik muddati',
         'from' => "Boshlang'ich sana ",
         'to' => "Tugash sanasi ",
-        'photo' => "Profil rasmi"
+        'photo' => "Profil rasmi",
+        'icon' => 'Ikonka',
+        'code' => 'Kod'
+
     ],
 
 ];

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -23,6 +24,16 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
     });
 
     Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+    // Languages
+    Route::controller(LanguageController::class)->name('languages.')->prefix('languages')->group(function () {
+        Route::get('index', 'index')->name('index')->can('languages.index');
+        Route::get('create', 'create')->name('create')->can('languages.store');
+        Route::post('/store', 'store')->name('store')->can('languages.store');
+        Route::get('edit/{id}', 'edit')->name('edit')->can('languages.update');
+        Route::put('/update/{id}', 'update')->name('update')->can('languages.update');
+        Route::get('delete/{id}', 'delete')->name('delete')->can('languages.delete');
+    });
 
     // Permissions
     Route::controller(PermissionController::class)->name('permissions.')->prefix('permissions')->group(function () {

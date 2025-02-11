@@ -30,6 +30,11 @@
                                     <a href="{{ route(('permissions.index')) }}"><i class="fa fa-unlock"></i>{{__('form.permissions.permissions')}}</a>
                                 </li>
                             @endcan
+                                @can('languages.index')
+                                    <li @if(request()->routeIs('languages.*')) class="active" @endif>
+                                        <a href="{{ route(('languages.index')) }}"><i class="fa fa-language"></i>{{__('content.languages')}}</a>
+                                    </li>
+                                @endcan
                         </ul>
                     </li>
                 @endcanany
