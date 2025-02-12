@@ -11,7 +11,7 @@ class Region extends Model
     use EloquentFilterTrait;
 
     protected $fillable = [
-        'active'
+        'status'
     ];
 
     public function translations(): HasMany

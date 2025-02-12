@@ -118,7 +118,7 @@ class LanguageService
 
     private function setLanguageToCache(): void
     {
-        $locales = Language::query()->where('active', '=', true)->get();
+        $locales = Language::query()->where('status', '=', true)->get();
         $locales->transform(function (Language $language) {
             return LanguageData::createFromEloquentModel($language);
         });

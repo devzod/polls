@@ -27,11 +27,11 @@
         @include('components.header')
         <div class="page-inner">
             <div id="main-wrapper">
-                <div class="pageheader pd-y-25">
+                <div class="pageheader pd-t-15">
                     <div class="pd-t-5 pd-b-5">
                         <h1 class="pd-0 mg-0 tx-20 text-overflow">Dashboard</h1>
                     </div>
-                    @include('components.breadcrumbs')
+{{--                    @include('components.breadcrumbs')--}}
                 </div>
                 @yield('content')
             </div>

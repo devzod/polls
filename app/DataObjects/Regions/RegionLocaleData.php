@@ -16,7 +16,7 @@ class RegionLocaleData extends DataObjectBase
     public int $id;
     public string $name;
     public string $locale;
-    public bool $active;
+    public bool $status;
     public Carbon $created_at;
     public Carbon $updated_at;
 }

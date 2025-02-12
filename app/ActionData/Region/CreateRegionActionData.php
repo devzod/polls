@@ -13,11 +13,11 @@ use Akbarali\ActionData\ActionDataBase;
 class CreateRegionActionData extends ActionDataBase
 {
     public array $name;
-    public bool $active = false;
+    public bool $status = false;
 
     protected array $rules = [
         "name" => "required|array",
         "name.*" => "required|string",
-        "active" => "nullable|boolean"
+        "status" => "nullable|boolean"
     ];
 }

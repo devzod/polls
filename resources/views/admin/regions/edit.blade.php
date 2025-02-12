@@ -28,7 +28,7 @@
                         <div class="form-row col-md-12">
                             <div class="col-md-12 mb-3">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" @checked($region->active) id="customCheck2" name="active">
+                                    <input type="checkbox" class="custom-control-input" @checked($region->status) id="customCheck2" name="status">
                                     <label class="custom-control-label" for="customCheck2">{{ __('validation.attributes.status') }}</label>
                                 </div>
                                 @if($errors->has('active'))

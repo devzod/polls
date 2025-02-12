@@ -19,14 +19,14 @@ class RegionViewModel extends BaseViewModel
     public  string $name;
     public  string $locale;
     public Carbon|string  $created_at = "";
-    public bool $active;
+    public bool $status;
     public string $active_class = "";
     public string $active_text = "";
 
     protected  function  populate():void
     {
         $this->created_at = $this->created_at->format('m.d.Y H:i');
-        $this->active_class = $this->active ? "badge-success" : "badge-danger";
-        $this->active_text = $this->active ? trans('content.active') : trans('content.disabled');
+        $this->active_class = $this->status ? "badge-success" : "badge-danger";
+        $this->active_text = $this->status ? trans('content.active') : trans('content.disabled');
     }
 }

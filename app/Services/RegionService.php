@@ -12,7 +12,6 @@ use App\Models\Region;
 use App\Models\RegionTranslation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
 
 /**
  * Author: Bekzod Raximov
@@ -53,7 +52,7 @@ class RegionService
      */
     public function create(CreateRegionActionData $actionData, Collection $languages): void
     {
-        $newRegion = Region::query()->create(['active' => true]);
+        $newRegion = Region::query()->create(['status' => true]);
         $translations = [];
         foreach ($languages as $language) {
             $translations[] = [
@@ -86,7 +85,7 @@ class RegionService
     public function update(int $id, CreateRegionActionData $actionData): void
     {
         $region = Region::query()->with('translations')->findOrFail($id);
-        $region->active = $actionData->active;
+        $region->status = $actionData->status;
         foreach ($region->translations as $translation) {
             $translation->name = $actionData->name[$translation->locale];
             $translation->save();
@@ -94,6 +93,28 @@ class RegionService
         $region->save();
     }
 
+    /**
+     * @return Collection
+     */
+    public function getRegions(): Collection
+    {
+        $regions = Region::query()
+            ->join('region_translations', 'regions.id', '=', 'region_translations.region_id')
+            ->where('regions.status', '=', true)
+            ->where('region_translations.locale', App::getLocale())
+            ->select('regions.*', 'region_translations.name as name', 'region_translations.locale as locale')
+            ->orderBy('regions.id', 'desc')
+            ->get();
+
+        $regions->transform(fn(Region $region) => RegionLocaleData::fromModel($region));
+
+        return $regions;
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     */
     public function delete(int $id): void
     {
         Region::query()->findOrFail($id)->delete();

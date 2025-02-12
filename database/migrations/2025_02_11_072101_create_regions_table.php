@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->boolean('active')->default(true);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

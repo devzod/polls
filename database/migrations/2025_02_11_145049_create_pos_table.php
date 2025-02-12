@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('languages', function (Blueprint $table) {
+        Schema::create('pos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('region_id')->constrained();
             $table->string('name');
-            $table->string('code')->unique();
-            $table->string('icon')->nullable();
-            $table->boolean('status')->default(true);
+            $table->string('phone');
+            $table->text('address');
+            $table->decimal('latitude', 11, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('languages');
+        Schema::dropIfExists('pos');
     }
 };

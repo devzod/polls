@@ -32,7 +32,7 @@
                             @endcan
                                 @can('languages.index')
                                     <li @if(request()->routeIs('languages.*')) class="active" @endif>
-                                        <a href="{{ route(('languages.index')) }}"><i class="fa fa-language"></i>{{__('content.languages')}}</a>
+                                        <a href="{{ route(('languages.index')) }}"><i class="fa fa-language"></i>{{__('form.locale.langs')}}</a>
                                     </li>
                                 @endcan
                                 @can('regions.index')
@@ -43,6 +43,11 @@
                         </ul>
                     </li>
                 @endcanany
+                @can('pos.index')
+                    <li @if(request()->routeIs('pos.*')) class="active" @endif>
+                        <a href="{{route('pos.index')}}"><i class="fa fa-building"></i><span>{{__('content.pos')}}</span></a>
+                    </li>
+                @endcan
                 <li>
                     <a href="javascript:void(0);"><i class="fa fa-clone"></i>
                         <span>Layouts</span><i class="accordion-icon fa fa-angle-left"></i></a>

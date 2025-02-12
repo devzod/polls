@@ -14,7 +14,7 @@ use Carbon\Carbon;
 class RegionData extends DataObjectBase
 {
     public int $id;
-    public bool $active;
+    public bool $status;
     public array $translations;
     public Carbon $created_at;
     public Carbon $updated_at;

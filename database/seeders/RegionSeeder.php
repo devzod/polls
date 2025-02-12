@@ -49,7 +49,7 @@ class RegionSeeder extends Seeder
     public function run(): void
     {
         for ($i = 1; $i <= 14; $i++) {
-            $region = Region::query()->create(['active' => true]);
+            $region = Region::query()->create(['status' => true]);
             RegionTranslation::query()->create([
                 'region_id' => $region->id,
                 'locale' => 'uz',

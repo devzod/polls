@@ -13,6 +13,6 @@ class Language extends Model
         'name',
         'code',
         'icon',
-        'active',
+        'status',
     ];
 }
