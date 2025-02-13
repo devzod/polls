@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PollController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
@@ -87,6 +88,17 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
         Route::get('edit/{id}', 'edit')->name('edit')->can('pos.update');
         Route::put('/update/{id}', 'update')->name('update')->can('pos.update');
         Route::get('delete/{id}', 'delete')->name('delete')->can('pos.delete');
+    });
+
+    // POLL
+    Route::controller(PollController::class)->name('poll.')->prefix('polls')->group(function () {
+        Route::get('index', 'index')->name('index')->can('poll.index');
+        Route::get('create', 'create')->name('create')->can('poll.store');
+        Route::post('/store', 'store')->name('store')->can('poll.store');
+        Route::get('show/{id}', 'show')->name('show')->can('poll.index');
+        Route::get('edit/{id}', 'edit')->name('edit')->can('poll.update');
+        Route::put('/update/{id}', 'update')->name('update')->can('poll.update');
+        Route::get('delete/{id}', 'delete')->name('delete')->can('poll.delete');
     });
 
     Route::get('profile', [UserController::class, 'profile'])->name('user.profile');

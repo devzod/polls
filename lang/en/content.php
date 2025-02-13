@@ -8,4 +8,5 @@ return [
     'longitude' => "Долгота",
     'coordinates' => "Coordinates",
     'not_found' => "Not found",
+    'polls' => "Polls",
 ];

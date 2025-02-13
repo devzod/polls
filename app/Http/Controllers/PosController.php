@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use Akbarali\ViewModel\PaginationViewModel;
 use App\ActionData\POS\PosActionData;
-use App\Filters\POS\PosSearchFilter;
+use App\Filters\Pos\PosSearchFilter;
 use App\Services\PosService;
 use App\Services\RegionService;
 use App\ViewModels\POS\PosViewModel;

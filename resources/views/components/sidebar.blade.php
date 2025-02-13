@@ -48,6 +48,11 @@
                         <a href="{{route('pos.index')}}"><i class="fa fa-building"></i><span>{{__('content.pos')}}</span></a>
                     </li>
                 @endcan
+                @can('poll.index')
+                    <li @if(request()->routeIs('poll.*')) class="active" @endif>
+                        <a href="{{route('poll.index')}}"><i class="fa fa-list-alt"></i><span>{{__('content.polls')}}</span></a>
+                    </li>
+                @endcan
                 <li>
                     <a href="javascript:void(0);"><i class="fa fa-clone"></i>
                         <span>Layouts</span><i class="accordion-icon fa fa-angle-left"></i></a>

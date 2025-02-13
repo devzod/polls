@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pos', function (Blueprint $table) {
+        Schema::create('polls', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('region_id')->constrained();
-            $table->string('name');
-            $table->string('phone');
-            $table->text('address');
-            $table->decimal('latitude', 11, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('type')->default(1);
+            $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pos');
+        Schema::dropIfExists('polls');
     }
 };

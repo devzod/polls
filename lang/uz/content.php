@@ -7,5 +7,6 @@ return [
     'latitude' => "Kenglik",
     'longitude' => "Uzunlik",
     'coordinates' => "Koordinatalar",
-    'not_found' => "Topilmadi"
+    'not_found' => "Topilmadi",
+    'polls' => "So'rovnomalar"
 ];

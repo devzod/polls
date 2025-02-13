@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\POS;
+namespace App\Filters\Pos;
 
 use App\Filters\EloquentFilterContract;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,9 +30,7 @@ class PosSearchFilter implements EloquentFilterContract
             $model->where('pos.status', '=', $this->request->get('status'));
         }
         if ($this->request->has('region_id')) {
-            $model->whereHas('region', function ($query) {
-                $query->where('pos.region_id','=', $this->request->get('region_id'));
-            });
+            $model->where('region_translations.region_id', '=', $this->request->get('region_id'));
         }
         return $model;
     }

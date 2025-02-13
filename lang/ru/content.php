@@ -7,5 +7,6 @@ return [
     'latitude' => "Широта",
     'longitude' => "Долгота",
     'coordinates' => "Координаты",
-    'not_found' => "Не найдено"
+    'not_found' => "Не найдено",
+    'polls' => 'Опросы',
 ];
