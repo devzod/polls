@@ -51,11 +51,28 @@ class PosService
      * @param int $id
      * @return PosData
      */
+    public function getPosAdmin(int $id): PosData
+    {
+        $pos = Pos::query()
+            ->join('region_translations', 'region_translations.region_id', '=', 'pos.region_id')
+            ->where('pos.id', '=', $id)
+            ->where('region_translations.locale', '=', app()->getLocale())
+            ->select('pos.*', 'region_translations.name as region_name')
+            ->firstOrFail();
+
+        return PosData::fromModel($pos);
+    }
+
+    /**
+     * @param int $id
+     * @return PosData
+     */
     public function getPos(int $id): PosData
     {
         $pos = Pos::query()
             ->join('region_translations', 'region_translations.region_id', '=', 'pos.region_id')
             ->where('pos.id', '=', $id)
+            ->where('pos.status', '=', Pos::POS_ACTIVE)
             ->where('region_translations.locale', '=', app()->getLocale())
             ->select('pos.*', 'region_translations.name as region_name')
             ->firstOrFail();

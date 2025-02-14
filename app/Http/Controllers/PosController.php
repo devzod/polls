@@ -59,7 +59,7 @@ class PosController extends Controller
      */
     public function edit(int $id): View
     {
-        $pos = $this->service->getPos($id);
+        $pos = $this->service->getPosAdmin($id);
         $regions = $this->regionService->getRegions();
 
         return view('admin.pos.edit', compact('pos', 'regions'));

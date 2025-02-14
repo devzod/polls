@@ -4,15 +4,15 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use Akbarali\ViewModel\Presenters\ApiResponse;
-use App\Filters\Pos\PosSearchFilter;
+use App\Filters\Poll\PollSearchFilter;
 use App\Http\Controllers\Controller;
-use App\Services\PosService;
-use App\Services\RegionService;
+use App\Services\LanguageService;
+use App\Services\PollService;
 use Illuminate\Http\Request;
 
-class PosController extends Controller
+class PollController extends Controller
 {
-    public function __construct(protected PosService $service, protected RegionService $regionService)
+    public function __construct(protected PollService $service, protected LanguageService $languageService)
     {
     }
 
@@ -22,14 +22,15 @@ class PosController extends Controller
      */
     public function getAll(Request $request): ApiResponse
     {
-        $filters[] = PosSearchFilter::getRequest($request);
+        $filters[] = PollSearchFilter::getRequest($request);
         $response = $this->service->getAll(page: (int)$request->get('page'), limit: (int)$request->get('limit', 15), filters: $filters);
         return ApiResponse::getSuccessResponse($response);
     }
 
     public function get(int $id): ApiResponse
     {
-        $response = $this->service->getPos($id);
+        $response = $this->service->getPoll($id);
         return ApiResponse::getSuccessResponse($response);
     }
+
 }

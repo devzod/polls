@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Akbarali\ActionData\ActionDataException;
 use Akbarali\ViewModel\PaginationViewModel;
+use Akbarali\ViewModel\Presenters\ApiResponse;
 use App\ActionData\Language\CreateLanguageActionData;
 use App\DataObjects\Language\LanguageData;
 use App\Filters\Permissions\PermissionsFilter;
@@ -31,6 +32,17 @@ class LanguageController extends Controller
         $filters[] = PermissionsFilter::getRequest($request);
         $collection = $this->service->paginate(page: (int)$request->get('page'), limit: (int)$request->get('limit', 10), filters: $filters);
         return (new PaginationViewModel($collection, LanguageViewModel::class))->toView('admin.languages.index');
+    }
+
+    /**
+     * @param Request $request
+     * @return ApiResponse
+     */
+    public function getAll(Request $request): ApiResponse
+    {
+        $filters[] = PermissionsFilter::getRequest($request);
+        $response = $this->service->getAllLocales(page: (int)$request->get('page'), limit: (int)$request->get('limit', 10), filters: $filters);
+        return ApiResponse::getSuccessResponse($response);
     }
 
     /**

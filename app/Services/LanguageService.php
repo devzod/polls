@@ -5,6 +5,7 @@ namespace App\Services;
 
 use Akbarali\DataObject\DataObjectCollection;
 use App\ActionData\Language\CreateLanguageActionData;
+use App\DataObjects\Common\DataObjectCollectionMix;
 use App\DataObjects\Language\LanguageData;
 use App\Models\Language;
 use Illuminate\Database\Eloquent\Collection;
@@ -38,6 +39,27 @@ class LanguageService
             return LanguageData::createFromEloquentModel($language);
         });
         return new DataObjectCollection($items, $totalCount, $limit, $page);
+    }
+
+    /**
+     * @param int $page
+     * @param int $limit
+     * @param iterable|null $filters
+     * @return DataObjectCollectionMix
+     */
+    public function getAllLocales(int $page = 1, int $limit = 10, ?iterable $filters = null): DataObjectCollectionMix
+    {
+        $model = Language::applyEloquentFilters($filters)
+            ->where('languages.status', '=', true)
+            ->orderBy('languages.id', 'desc');
+
+        $totalCount = $model->count();
+        $skip = $limit * ($page - 1);
+        $items = $model->skip($skip)->take($limit)->get();
+        $items->transform(function (Language $language) {
+            return LanguageData::createFromEloquentModel($language);
+        });
+        return new DataObjectCollectionMix($items, $totalCount, $limit, $page);
     }
 
     /**
