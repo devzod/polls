@@ -44,6 +44,11 @@ class PermissionSeeder extends Seeder
         ["name" => "poll.update", "guard_name" => "web",],
         ["name" => "poll.delete", "guard_name" => "web",],
 
+        ["name" => "stuff.index", "guard_name" => "web",],
+        ["name" => "stuff.store", "guard_name" => "web",],
+        ["name" => "stuff.update", "guard_name" => "web",],
+        ["name" => "stuff.delete", "guard_name" => "web",],
+
     ];
 
     /**

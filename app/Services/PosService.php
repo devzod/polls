@@ -5,9 +5,9 @@ namespace App\Services;
 
 use Akbarali\DataObject\DataObjectCollection;
 use App\ActionData\POS\PosActionData;
+use App\DataObjects\Common\DataObjectCollectionMix;
 use App\DataObjects\POS\PosData;
 use App\Models\Pos;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Author: Bekzod Raximov
@@ -64,18 +64,24 @@ class PosService
     }
 
     /**
-     * @return Collection
+     * @param int $page
+     * @param int $limit
+     * @param iterable|null $filters
+     * @return DataObjectCollectionMix
      */
-    public function getAllPos(): Collection
+    public function getAll(int $page = 1, int $limit = 15, ?iterable $filters = null): DataObjectCollectionMix
     {
-        $pos = Pos::query()
+        $model = Pos::applyEloquentFilters($filters)
             ->join('region_translations', 'region_translations.region_id', '=', 'pos.region_id')
             ->where('pos.status', '=', Pos::POS_ACTIVE)
             ->where('region_translations.locale', '=', app()->getLocale())
             ->select('pos.*', 'region_translations.name as region_name')
-            ->get();
-        $pos->transform(fn(Pos $pos) => PosData::fromModel($pos));
-        return $pos;
+            ->orderBy('pos.id', 'desc');;
+        $total = $model->count();
+        $skip = ($page - 1) * $limit;
+        $items = $model->skip($skip)->take($limit)->get();
+        $items->transform(fn(Pos $pos) => PosData::fromModel($pos));
+        return new DataObjectCollectionMix($items, $total, $limit, $page);
     }
 
     /**

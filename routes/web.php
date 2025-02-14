@@ -8,6 +8,7 @@ use App\Http\Controllers\PollController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StuffController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -99,6 +100,17 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
         Route::get('edit/{id}', 'edit')->name('edit')->can('poll.update');
         Route::put('/update/{id}', 'update')->name('update')->can('poll.update');
         Route::get('delete/{id}', 'delete')->name('delete')->can('poll.delete');
+    });
+
+    // STUFF
+    Route::controller(StuffController::class)->name('stuff.')->prefix('stuff')->group(function () {
+        Route::get('index', 'index')->name('index')->can('stuff.index');
+        Route::get('create', 'create')->name('create')->can('stuff.store');
+        Route::post('/store', 'store')->name('store')->can('stuff.store');
+        Route::get('show/{id}', 'show')->name('show')->can('stuff.index');
+        Route::get('edit/{id}', 'edit')->name('edit')->can('stuff.update');
+        Route::put('/update/{id}', 'update')->name('update')->can('stuff.update');
+        Route::get('delete/{id}', 'delete')->name('delete')->can('stuff.delete');
     });
 
     Route::get('profile', [UserController::class, 'profile'])->name('user.profile');

@@ -23,14 +23,16 @@ class PosViewModel extends BaseViewModel
     public float|null $latitude;
     public float|null $longitude;
     public int $status;
-    public Carbon $created_at;
-    public Carbon $updated_at;
+    public Carbon|string $created_at;
+    public Carbon|string $updated_at;
     public string $active_class = "";
     public string $active_text = "";
 
 
     protected function populate()
     {
+        $this->created_at = $this->created_at->format('m.d.Y');
+        $this->updated_at = $this->updated_at->format('m.d.Y');
         $this->active_class = $this->status ? "badge-success" : "badge-danger";
         $this->active_text = $this->status == Pos::POS_ACTIVE ? trans('content.active') : trans('content.disabled');
     }

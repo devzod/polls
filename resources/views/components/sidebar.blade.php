@@ -43,6 +43,11 @@
                         </ul>
                     </li>
                 @endcanany
+                @can('stuff.index')
+                    <li @if(request()->routeIs('stuff.*')) class="active" @endif>
+                        <a href="{{route('stuff.index')}}"><i class="fa fa-users"></i><span>{{__('content.stuffs')}}</span></a>
+                    </li>
+                @endcan
                 @can('pos.index')
                     <li @if(request()->routeIs('pos.*')) class="active" @endif>
                         <a href="{{route('pos.index')}}"><i class="fa fa-building"></i><span>{{__('content.pos')}}</span></a>

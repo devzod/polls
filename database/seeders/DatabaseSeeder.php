@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PosSeeder::class,
             PollSeeder::class,
+            StuffSeeder::class,
         ]);
     }
 }

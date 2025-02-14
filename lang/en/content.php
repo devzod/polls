@@ -9,4 +9,7 @@ return [
     'coordinates' => "Coordinates",
     'not_found' => "Not found",
     'polls' => "Polls",
+    'poll' => "Poll",
+    'stuffs' => "Stuffs",
+    'stuff' => "Stuff",
 ];
