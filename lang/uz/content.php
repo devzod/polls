@@ -8,5 +8,9 @@ return [
     'longitude' => "Uzunlik",
     'coordinates' => "Koordinatalar",
     'not_found' => "Topilmadi",
-    'polls' => "So'rovnomalar"
+    'polls' => "So'rovnomalar",
+    'participants' => "Ishtirokchilar",
+    'participant' => "Ishtirokchi",
+    'male' => "Erkak",
+    'female' => "Ayol",
 ];

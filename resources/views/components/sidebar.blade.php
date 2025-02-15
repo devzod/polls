@@ -43,7 +43,7 @@
                         </ul>
                     </li>
                 @endcanany
-                @can('stuff.index')
+                @can('stuffs.index')
                     <li @if(request()->routeIs('stuff.*')) class="active" @endif>
                         <a href="{{route('stuff.index')}}"><i class="fa fa-users"></i><span>{{__('content.stuffs')}}</span></a>
                     </li>
@@ -53,9 +53,14 @@
                         <a href="{{route('pos.index')}}"><i class="fa fa-building"></i><span>{{__('content.pos')}}</span></a>
                     </li>
                 @endcan
-                @can('poll.index')
+                @can('polls.index')
                     <li @if(request()->routeIs('poll.*')) class="active" @endif>
                         <a href="{{route('poll.index')}}"><i class="fa fa-list-alt"></i><span>{{__('content.polls')}}</span></a>
+                    </li>
+                @endcan
+                @can('participants.index')
+                    <li @if(request()->routeIs('participants.*')) class="active" @endif>
+                        <a href="{{route('participants.index')}}"><i class="fa fa-users"></i><span>{{__('content.participants')}}</span></a>
                     </li>
                 @endcan
                 <li>

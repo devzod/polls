@@ -86,11 +86,11 @@
                                 <td>{{$item->created_at}}</td>
                                 <td>
                                     <a href="{{ route("poll.show", [$item->id]) }}"><i class="fa fa-eye text-purple button-2x"></i></a>
-                                    @can('poll.update')
+                                    @can('polls.update')
                                         <a class="mg-x-10" href="{{ route("poll.edit", [$item->id]) }}">
                                             <i class="fa fa-edit text-purple button-2x"></i></a>
                                     @endcan
-                                    @can('poll.delete')
+                                    @can('polls.delete')
                                         <a href="{{ route("poll.delete", [$item->id]) }}" class=""
                                            onclick="return confirm(this.getAttribute('data-message'));"
                                            data-message="{{ __('table.confirm_delete') }}">

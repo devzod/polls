@@ -50,6 +50,10 @@ class StuffController extends Controller
 
     }
 
+    /**
+     * @param CreateAdminStuffActionData $actionData
+     * @return RedirectResponse
+     */
     public function store(CreateAdminStuffActionData $actionData): RedirectResponse
     {
         $this->service->create($actionData);
@@ -58,9 +62,13 @@ class StuffController extends Controller
 
     }
 
+    /**
+     * @param int $id
+     * @param UpdateAdminStuffActionData $actionData
+     * @return RedirectResponse
+     */
     public function update(int $id, UpdateAdminStuffActionData $actionData): RedirectResponse
     {
-//        dd($actionData);
         $this->service->updateAdmin($actionData, $id);
         return redirect()->route('stuff.index')
             ->with('success', trans('form.success_update', ['attribute' => trans('content.stuff')]));

@@ -12,4 +12,8 @@ return [
     'poll' => "Poll",
     'stuffs' => "Stuffs",
     'stuff' => "Stuff",
+    'participants' => "Participants",
+    'participant' => "Participant",
+    'male' => "Male",
+    'female' => "Female",
 ];

@@ -3,7 +3,7 @@
 namespace App\ViewModels\POS;
 
 use Akbarali\ViewModel\BaseViewModel;
-use App\Models\Pos;
+use App\Enums\PosStatusEnum;
 use Carbon\Carbon;
 
 /**
@@ -34,6 +34,6 @@ class PosViewModel extends BaseViewModel
         $this->created_at = $this->created_at->format('m.d.Y');
         $this->updated_at = $this->updated_at->format('m.d.Y');
         $this->active_class = $this->status ? "badge-success" : "badge-danger";
-        $this->active_text = $this->status == Pos::POS_ACTIVE ? trans('content.active') : trans('content.disabled');
+        $this->active_text = $this->status == PosStatusEnum::ACTIVE->value ? trans('content.active') : trans('content.disabled');
     }
 }

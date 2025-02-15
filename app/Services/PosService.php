@@ -7,6 +7,7 @@ use Akbarali\DataObject\DataObjectCollection;
 use App\ActionData\POS\PosActionData;
 use App\DataObjects\Common\DataObjectCollectionMix;
 use App\DataObjects\POS\PosData;
+use App\Enums\PosStatusEnum;
 use App\Models\Pos;
 
 /**
@@ -43,7 +44,7 @@ class PosService
      */
     public function create(PosActionData $actionData): void
     {
-        $actionData->status = Pos::POS_ACTIVE;
+        $actionData->status = PosStatusEnum::ACTIVE->value;
         Pos::query()->create($actionData->toArray());
     }
 
@@ -72,7 +73,7 @@ class PosService
         $pos = Pos::query()
             ->join('region_translations', 'region_translations.region_id', '=', 'pos.region_id')
             ->where('pos.id', '=', $id)
-            ->where('pos.status', '=', Pos::POS_ACTIVE)
+            ->where('pos.status', '=', PosStatusEnum::ACTIVE->value)
             ->where('region_translations.locale', '=', app()->getLocale())
             ->select('pos.*', 'region_translations.name as region_name')
             ->firstOrFail();
@@ -90,7 +91,7 @@ class PosService
     {
         $model = Pos::applyEloquentFilters($filters)
             ->join('region_translations', 'region_translations.region_id', '=', 'pos.region_id')
-            ->where('pos.status', '=', Pos::POS_ACTIVE)
+            ->where('pos.status', '=', PosStatusEnum::ACTIVE->value)
             ->where('region_translations.locale', '=', app()->getLocale())
             ->select('pos.*', 'region_translations.name as region_name')
             ->orderBy('pos.id', 'desc');;

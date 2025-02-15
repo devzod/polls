@@ -39,15 +39,20 @@ class PermissionSeeder extends Seeder
         ["name" => "pos.update", "guard_name" => "web",],
         ["name" => "pos.delete", "guard_name" => "web",],
 
-        ["name" => "poll.index", "guard_name" => "web",],
-        ["name" => "poll.store", "guard_name" => "web",],
-        ["name" => "poll.update", "guard_name" => "web",],
-        ["name" => "poll.delete", "guard_name" => "web",],
+        ["name" => "polls.index", "guard_name" => "web",],
+        ["name" => "polls.store", "guard_name" => "web",],
+        ["name" => "polls.update", "guard_name" => "web",],
+        ["name" => "polls.delete", "guard_name" => "web",],
 
-        ["name" => "stuff.index", "guard_name" => "web",],
-        ["name" => "stuff.store", "guard_name" => "web",],
-        ["name" => "stuff.update", "guard_name" => "web",],
-        ["name" => "stuff.delete", "guard_name" => "web",],
+        ["name" => "stuffs.index", "guard_name" => "web",],
+        ["name" => "stuffs.store", "guard_name" => "web",],
+        ["name" => "stuffs.update", "guard_name" => "web",],
+        ["name" => "stuffs.delete", "guard_name" => "web",],
+
+        ["name" => "participants.index", "guard_name" => "web",],
+        ["name" => "participants.store", "guard_name" => "web",],
+        ["name" => "participants.update", "guard_name" => "web",],
+        ["name" => "participants.delete", "guard_name" => "web",],
 
     ];
 

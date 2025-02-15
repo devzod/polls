@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" @checked($pos->status) id="customCheck2" name="status">
+                                    <input type="checkbox" class="custom-control-input" @checked($pos->status) id="customCheck2" name="status" value="1">
                                     <label class="custom-control-label" for="customCheck2">Статус</label>
                                 </div>
                                 @if($errors->has('status'))

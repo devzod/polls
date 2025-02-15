@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\PosController;
@@ -91,26 +92,37 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
         Route::get('delete/{id}', 'delete')->name('delete')->can('pos.delete');
     });
 
-    // POLL
+    // POLLS
     Route::controller(PollController::class)->name('poll.')->prefix('polls')->group(function () {
-        Route::get('index', 'index')->name('index')->can('poll.index');
-        Route::get('create', 'create')->name('create')->can('poll.store');
-        Route::post('/store', 'store')->name('store')->can('poll.store');
-        Route::get('show/{id}', 'show')->name('show')->can('poll.index');
-        Route::get('edit/{id}', 'edit')->name('edit')->can('poll.update');
-        Route::put('/update/{id}', 'update')->name('update')->can('poll.update');
-        Route::get('delete/{id}', 'delete')->name('delete')->can('poll.delete');
+        Route::get('index', 'index')->name('index')->can('polls.index');
+        Route::get('create', 'create')->name('create')->can('polls.store');
+        Route::post('/store', 'store')->name('store')->can('polls.store');
+        Route::get('show/{id}', 'show')->name('show')->can('polls.index');
+        Route::get('edit/{id}', 'edit')->name('edit')->can('polls.update');
+        Route::put('/update/{id}', 'update')->name('update')->can('polls.update');
+        Route::get('delete/{id}', 'delete')->name('delete')->can('polls.delete');
     });
 
     // STUFF
-    Route::controller(StuffController::class)->name('stuff.')->prefix('stuff')->group(function () {
-        Route::get('index', 'index')->name('index')->can('stuff.index');
-        Route::get('create', 'create')->name('create')->can('stuff.store');
-        Route::post('/store', 'store')->name('store')->can('stuff.store');
-        Route::get('show/{id}', 'show')->name('show')->can('stuff.index');
-        Route::get('edit/{id}', 'edit')->name('edit')->can('stuff.update');
-        Route::put('/update/{id}', 'update')->name('update')->can('stuff.update');
-        Route::get('delete/{id}', 'delete')->name('delete')->can('stuff.delete');
+    Route::controller(StuffController::class)->name('stuff.')->prefix('stuffs')->group(function () {
+        Route::get('index', 'index')->name('index')->can('stuffs.index');
+        Route::get('create', 'create')->name('create')->can('stuffs.store');
+        Route::post('/store', 'store')->name('store')->can('stuffs.store');
+        Route::get('show/{id}', 'show')->name('show')->can('stuffs.index');
+        Route::get('edit/{id}', 'edit')->name('edit')->can('stuffs.update');
+        Route::put('/update/{id}', 'update')->name('update')->can('stuffs.update');
+        Route::get('delete/{id}', 'delete')->name('delete')->can('stuffs.delete');
+    });
+
+    // Participants
+    Route::controller(ParticipantController::class)->name('participants.')->prefix('participants')->group(function () {
+        Route::get('index', 'index')->name('index')->can('participants.index');
+//        Route::get('create', 'create')->name('create')->can('participants.store');
+//        Route::post('/store', 'store')->name('store')->can('participants.store');
+        Route::get('show/{id}', 'show')->name('show')->can('participants.index');
+        Route::get('edit/{id}', 'edit')->name('edit')->can('participants.update');
+        Route::put('/update/{id}', 'update')->name('update')->can('participants.update');
+        Route::get('delete/{id}', 'delete')->name('delete')->can('participants.delete');
     });
 
     Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
