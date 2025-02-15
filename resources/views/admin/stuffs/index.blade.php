@@ -69,9 +69,9 @@
                                 <td>{{$item->phone}}</td>
                                 <td><span class="badge badge-pill {{$item->active_class}}">{{ $item->active_text }}</span></td>
                                 <td>
-                                    <a href="{{ route("stuff.show", [$item->id]) }}"><i class="fa fa-eye text-purple button-2x"></i></a>
+                                    <a href="{{ route("stuff.show", [$item->id]) }}">@lang('content.polls')<i class="fa fa-list-alt text-dark button-2x mg-l-5"></i></a>
                                     @can('stuff.update')
-                                        <a href="{{ route("stuff.edit", [$item->id]) }}">
+                                        <a class="mg-x-10" href="{{ route("stuff.edit", [$item->id]) }}">
                                             <i class="fa fa-edit text-purple button-2x"></i></a>
                                     @endcan
                                     @can('stuff.delete')

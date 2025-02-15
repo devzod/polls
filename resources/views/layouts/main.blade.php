@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="keyword" content="">
     <meta name="author" content=""/>
-    <title>POS POLL Dashboard</title>
+    <title>Polls Dashboard</title>
     <link href="{{ asset("assets/plugins/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("assets/plugins/font-awesome/css/font-awesome.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("assets/plugins/simple-line-icons/css/simple-line-icons.css") }}" rel="stylesheet">

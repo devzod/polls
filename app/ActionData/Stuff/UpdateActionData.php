@@ -17,7 +17,7 @@ class UpdateActionData extends ActionDataBase
 
     protected array $rules = [
         "name" => "required|string",
-        "phone" => "nullable|string",
+        "phone" => "nullable|string|min:9",
     ];
 
 }

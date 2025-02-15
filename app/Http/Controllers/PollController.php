@@ -26,7 +26,7 @@ class PollController extends Controller
         $filters[] = PollSearchFilter::getRequest($request);
         $polls = $this->service->paginate(page: (int)$request->get('page'), limit: (int)$request->get('limit', 10), filters: $filters);
 
-        return (new PaginationViewModel($polls, PollViewModel::class))->toView('admin.poll.index');
+        return (new PaginationViewModel($polls, PollViewModel::class))->toView('admin.polls.index');
     }
 
     /**
@@ -35,6 +35,6 @@ class PollController extends Controller
     public function create(): View
     {
         $locales = $this->languageService->getAll();
-        return view('admin.poll.create', compact('locales'));
+        return view('admin.polls.create', compact('locales'));
     }
 }

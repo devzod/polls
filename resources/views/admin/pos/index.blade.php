@@ -88,7 +88,7 @@
                                 <td><span class="badge badge-pill {{$item->active_class}}">{{ $item->active_text }}</span></td>
                                 <td>
                                     @can('pos.update')
-                                        <a href="{{ route("pos.edit", [$item->id]) }}">
+                                        <a class="mg-r-10" href="{{ route("pos.edit", [$item->id]) }}">
                                             <i class="fa fa-edit text-purple button-2x"></i></a>
                                     @endcan
                                     @can('pos.delete')

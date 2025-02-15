@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Akbarali\DataObject\DataObjectCollection;
+use App\ActionData\Stuff\CreateAdminStuffActionData;
 use App\ActionData\Stuff\UpdateActionData;
+use App\ActionData\Stuff\UpdateAdminStuffActionData;
 use App\DataObjects\Common\TokenData;
 use App\DataObjects\Stuff\StuffApiData;
 use App\DataObjects\Stuff\StuffData;
@@ -29,7 +31,7 @@ class StuffService
      */
     public function paginate(int $page = 1, int $limit = 10, ?iterable $filters = null): DataObjectCollection
     {
-        $model = Stuff::applyEloquentFilters($filters)->orderBy('id', 'desc');
+        $model = Stuff::applyEloquentFilters($filters)->orderBy('stuffs.id', 'desc');
         $totalCount = $model->count();
         $skip = $limit * ($page - 1);
         $items = $model->skip($skip)->take($limit)->get();
@@ -80,11 +82,49 @@ class StuffService
     }
 
     /**
+     * @param UpdateAdminStuffActionData $actionData
+     * @param int $id
+     * @return void
+     */
+    public function updateAdmin(UpdateAdminStuffActionData $actionData, int $id): void
+    {
+        $stuff = Stuff::query()->where('id', '=', $id)->firstOrFail();
+        $stuff->name = $actionData->name;
+        $stuff->phone = $actionData->phone;
+        $stuff->login = $actionData->login;
+        $stuff->status = $actionData->status;
+        if ($actionData->password !== null) {
+            $stuff->password = Hash::make($actionData->password);
+        }
+        $stuff->save();
+    }
+
+    /**
      * @param Request $request
      * @return bool
      */
     public function logout(Request $request): bool
     {
         return $request->user()->currentAccessToken()->delete();
+    }
+
+    /**
+     * @param CreateAdminStuffActionData $actionData
+     * @return void
+     */
+    public function create(CreateAdminStuffActionData $actionData):void
+    {
+       Stuff::query()->create($actionData->toArray());
+    }
+
+    /**
+     * @param int $id
+     * @return StuffData
+     */
+    public function getStuff(int $id): StuffData
+    {
+        $stuff = Stuff::query()->findOrFail($id);
+
+        return StuffData::fromModel($stuff);
     }
 }

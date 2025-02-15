@@ -87,7 +87,7 @@
                                 <td>
                                     <a href="{{ route("poll.show", [$item->id]) }}"><i class="fa fa-eye text-purple button-2x"></i></a>
                                     @can('poll.update')
-                                        <a href="{{ route("poll.edit", [$item->id]) }}">
+                                        <a class="mg-x-10" href="{{ route("poll.edit", [$item->id]) }}">
                                             <i class="fa fa-edit text-purple button-2x"></i></a>
                                     @endcan
                                     @can('poll.delete')

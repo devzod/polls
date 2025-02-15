@@ -148,6 +148,7 @@ return [
         'icon' => 'Ikonka',
         'code' => 'Kod',
         'status' => 'Status',
+        'login' => "Login",
 
     ],
 
