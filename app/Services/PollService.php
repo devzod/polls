@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use Akbarali\DataObject\DataObjectCollection;
-use Akbarali\ViewModel\Presenters\ApiResponse;
+use App\ActionData\Poll\CreatePollActionData;
 use App\DataObjects\Common\DataObjectCollectionMix;
 use App\DataObjects\Poll\PollData;
 use App\Enums\PollStatusEnum;
 use App\Models\Poll;
+use App\Models\PollTranslation;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 
 /**
@@ -63,7 +65,7 @@ class PollService
      * @param int $id
      * @return PollData
      */
-    public function getPoll(int $id):PollData
+    public function getPoll(int $id): PollData
     {
         $poll = Poll::query()
             ->join('poll_translations', 'polls.id', '=', 'poll_translations.poll_id')
@@ -72,5 +74,37 @@ class PollService
             ->select('polls.*', 'poll_translations.title as title', 'poll_translations.text as text')
             ->findOrFail($id);
         return PollData::fromModel($poll);
+    }
+
+    /**
+     * @param CreatePollActionData $actionData
+     * @param Collection $languages
+     * @return int
+     */
+    public function store(CreatePollActionData $actionData, Collection $languages): int
+    {
+        $poll = Poll::query()->create(['status' => PollStatusEnum::ACTIVE->value]);
+        $translations = [];
+        foreach ($languages as $language) {
+            $translations[] = [
+                'poll_id' => $poll->id,
+                'title' => $actionData->title[$language->code],
+                'text' => $actionData->text[$language->code],
+                'locale' => $language->code,
+                'created_at' => now(),
+                'updated_at' => now()
+            ];
+        }
+        PollTranslation::query()->insert($translations);
+        return $poll->id;
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public function delete(int $id): void
+    {
+       Poll::query()->findOrFail($id)->delete();
     }
 }

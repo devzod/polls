@@ -93,7 +93,7 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
     });
 
     // POLLS
-    Route::controller(PollController::class)->name('poll.')->prefix('polls')->group(function () {
+    Route::controller(PollController::class)->name('polls.')->prefix('polls')->group(function () {
         Route::get('index', 'index')->name('index')->can('polls.index');
         Route::get('create', 'create')->name('create')->can('polls.store');
         Route::post('/store', 'store')->name('store')->can('polls.store');

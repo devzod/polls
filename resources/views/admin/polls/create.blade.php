@@ -7,7 +7,7 @@
                     <h4 class="card-header-title">{{ __('form.add') }} {{ __('content.polls') }}</h4>
                 </div>
                 <div class="card-body collapse show" id="collapse8">
-                    <form class="needs-validation" action="{{ route("pos.store") }}" method="post">
+                    <form class="needs-validation" action="{{ route("polls.store") }}" method="post">
                         @csrf
                         <div class="form-row">
                             @foreach($locales as $locale)
@@ -24,17 +24,17 @@
                                 <div class="col-md-12 mb-3">
                                     <label for="text_{{$locale->code}}">{{ __('validation.attributes.description') }}
                                         ({{$locale->name}})</label>
-                                    <textarea class="form-control" id="text_{{$locale->code}}" name="text" required
-                                              rows="5">{{old('text')}}</textarea>
-                                    @if($errors->has('text'))
-                                        <div class="text-danger">{{ $errors->first('text') }}</div>
+                                    <textarea class="form-control" id="text_{{$locale->code}}" name="text[{{$locale->code}}]" required
+                                              rows="5">{{old("text['.$locale->code.']")}}</textarea>
+                                    @if($errors->has('text['.$locale->code.']'))
+                                        <div class="text-danger">{{ $errors->first('text['.$locale->code.']') }}</div>
                                     @endif
                                 </div>
                                 <hr>
                             @endforeach
                         </div>
                         <div class="form-group text-center ">
-                            <a href="{{ route('pos.index') }}" class="btn btn-slack">{{{ __('form.cancel') }}}</a>
+                            <a href="{{ route('polls.index') }}" class="btn btn-slack">{{{ __('form.cancel') }}}</a>
                             <button class="btn btn-info">{{ __('form.add') }}</button>
                         </div>
                     </form>

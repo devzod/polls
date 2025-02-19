@@ -54,8 +54,8 @@
                     </li>
                 @endcan
                 @can('polls.index')
-                    <li @if(request()->routeIs('poll.*')) class="active" @endif>
-                        <a href="{{route('poll.index')}}"><i class="fa fa-list-alt"></i><span>{{__('content.polls')}}</span></a>
+                    <li @if(request()->routeIs('polls.*')) class="active" @endif>
+                        <a href="{{route('polls.index')}}"><i class="fa fa-list-alt"></i><span>{{__('content.polls')}}</span></a>
                     </li>
                 @endcan
                 @can('participants.index')
