@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div class="form-group text-center ">
-                            <a href="{{ route('pos.index') }}" class="btn btn-slack">{{{ __('form.cancel') }}}</a>
+                            <a href="{{ route('poll.index') }}" class="btn btn-slack">{{{ __('form.cancel') }}}</a>
                             <button class="btn btn-info">{{ __('form.edit') }}</button>
                         </div>
                     </form>

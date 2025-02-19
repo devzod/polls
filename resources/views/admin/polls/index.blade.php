@@ -7,11 +7,10 @@
                     <div class="card-header-title">
                         <h5><a href="{{ route('poll.index') }}">{{ __('content.polls') }}</a></h5>
                     </div>
-                    @can('poll.store')
+                    @can('polls.store')
                         <a href="{{ route("poll.create") }}" class="btn btn-outline-success">
                             <i class="fa fa-plus button-2x"> {{ __('form.add') }}</i></a>
                     @endcan
-
                 </div>
                 <div class="card-body collapse show" id="collapse2">
                     <table class="table table-striped table-responsive-sm">
