@@ -10,6 +10,7 @@
         "akbarali/action-data": "^1.4",
         "akbarali/data-object": "^2.8",
         "akbarali/view-model": "^2.1",
+        "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
