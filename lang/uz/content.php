@@ -13,4 +13,8 @@ return [
     'participant' => "Ishtirokchi",
     'male' => "Erkak",
     'female' => "Ayol",
+    'questions' => "Savollar",
+    'question' => "Savol",
+    'options' => "Variantlar",
+    'option' => "Variant",
 ];

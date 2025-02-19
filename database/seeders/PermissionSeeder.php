@@ -54,6 +54,11 @@ class PermissionSeeder extends Seeder
         ["name" => "participants.update", "guard_name" => "web",],
         ["name" => "participants.delete", "guard_name" => "web",],
 
+        ["name" => "questions.index", "guard_name" => "web",],
+        ["name" => "questions.store", "guard_name" => "web",],
+        ["name" => "questions.update", "guard_name" => "web",],
+        ["name" => "questions.delete", "guard_name" => "web",],
+
     ];
 
     /**

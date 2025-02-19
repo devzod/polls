@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Akbarali\ViewModel\PaginationViewModel;
 use App\ActionData\Poll\CreatePollActionData;
+use App\Enums\PollStatusEnum;
 use App\Filters\Poll\PollSearchFilter;
 use App\Services\LanguageService;
 use App\Services\PollService;
@@ -32,6 +33,15 @@ class PollController extends Controller
     }
 
     /**
+     * @param int $id
+     * @return View
+     */
+    public function show(int $id): View
+    {
+        return view('admin.polls.show');
+    }
+
+    /**
      * @return View
      */
     public function create(): View
@@ -50,6 +60,29 @@ class PollController extends Controller
         $this->service->store($actionData, $languages);
         return redirect()->route('polls.index')
             ->with('success', trans('form.success_create', ['attribute' => trans('content.poll')]));
+    }
+
+    /**
+     * @param int $id
+     * @return View
+     */
+    public function edit(int $id): View
+    {
+        $poll = $this->service->getPoll($id);
+        $statuses = PollStatusEnum::cases();
+        return view('admin.polls.edit', compact('poll', 'statuses'));
+    }
+
+    /**
+     * @param CreatePollActionData $actionData
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function update(CreatePollActionData $actionData, int $id): RedirectResponse
+    {
+        $this->service->update($actionData, $id);
+        return redirect()->route('polls.index')
+            ->with('success', trans('form.success_update', ['attribute' => trans('content.poll')]));
     }
 
     /**

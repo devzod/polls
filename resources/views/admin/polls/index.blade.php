@@ -84,17 +84,22 @@
                                 <td><span class="badge badge-pill {{$item->active_class}}">{{ $item->active_text }}</span></td>
                                 <td>{{$item->created_at}}</td>
                                 <td>
-                                    <a href="{{ route("polls.show", [$item->id]) }}"><i class="fa fa-eye text-purple button-2x"></i></a>
-                                    @can('polls.update')
-                                        <a class="mg-x-10" href="{{ route("polls.edit", [$item->id]) }}">
-                                            <i class="fa fa-edit text-purple button-2x"></i></a>
-                                    @endcan
-                                    @can('polls.delete')
-                                        <a href="{{ route("polls.delete", [$item->id]) }}" class=""
-                                           onclick="return confirm(this.getAttribute('data-message'));"
-                                           data-message="{{ __('table.confirm_delete') }}">
-                                            <i class="fa fa-trash-o text-danger button-2x"></i></a>
-                                    @endcan
+                                    <div class="d-flex align-items-center">
+                                        <a href="{{ route("polls.show", [$item->id]) }}"><i class="fa fa-eye text-purple button-2x"></i></a>
+                                        @can('polls.update')
+                                            <a class="mg-x-10" href="{{ route("polls.edit", [$item->id]) }}">
+                                                <i class="fa fa-edit text-purple button-2x"></i></a>
+                                        @endcan
+                                        @can('polls.delete')
+                                            <a href="{{ route("polls.delete", [$item->id]) }}" class=""
+                                               onclick="return confirm(this.getAttribute('data-message'));"
+                                               data-message="{{ __('table.confirm_delete') }}">
+                                                <i class="fa fa-trash-o text-danger button-2x"></i></a>
+                                        @endcan
+                                        @can('questions.store')
+                                            <a class="ml-2 btn btn-outline-success" href="{{ route("polls.edit", [$item->id]) }}">Questions</a>
+                                        @endcan
+                                    </div>
                                 </td>
                             </tr>
                         @empty

@@ -6,6 +6,8 @@ use Akbarali\DataObject\DataObjectCollection;
 use App\ActionData\Poll\CreatePollActionData;
 use App\DataObjects\Common\DataObjectCollectionMix;
 use App\DataObjects\Poll\PollData;
+use App\DataObjects\Poll\PollTranslationsData;
+use App\DataObjects\TranslationData;
 use App\Enums\PollStatusEnum;
 use App\Models\Poll;
 use App\Models\PollTranslation;
@@ -65,7 +67,7 @@ class PollService
      * @param int $id
      * @return PollData
      */
-    public function getPoll(int $id): PollData
+    public function getPollLocale(int $id): PollData
     {
         $poll = Poll::query()
             ->join('poll_translations', 'polls.id', '=', 'poll_translations.poll_id')
@@ -77,13 +79,28 @@ class PollService
     }
 
     /**
+     * @param int $id
+     * @return PollTranslationsData
+     */
+    public function getPoll(int $id): PollTranslationsData
+    {
+        $poll = Poll::query()->with('translations')->findOrFail($id);
+        $poll->translations->transform(fn(PollTranslation $locale) => TranslationData::fromModel($locale));
+        return PollTranslationsData::fromModel($poll);
+    }
+
+    /**
      * @param CreatePollActionData $actionData
      * @param Collection $languages
      * @return int
      */
     public function store(CreatePollActionData $actionData, Collection $languages): int
     {
-        $poll = Poll::query()->create(['status' => PollStatusEnum::ACTIVE->value]);
+        $actionData->status = PollStatusEnum::ACTIVE->value;
+        $poll = Poll::query()->create([
+            'status' => PollStatusEnum::ACTIVE->value,
+            'type' => $actionData->type,
+        ]);
         $translations = [];
         foreach ($languages as $language) {
             $translations[] = [
@@ -97,6 +114,28 @@ class PollService
         }
         PollTranslation::query()->insert($translations);
         return $poll->id;
+    }
+
+    /**
+     * @param CreatePollActionData $actionData
+     * @param int $id
+     * @return void
+     */
+    public function update(CreatePollActionData $actionData, int $id): void
+    {
+        $poll = Poll::query()->with('translations')->findOrFail($id);
+        foreach ($poll->translations as $translation) {
+            $translation->update([
+                'title' => $actionData->title[$translation->locale],
+                'text' => $actionData->text[$translation->locale],
+                'updated_at' => now()
+            ]);
+        }
+        $poll->status = $actionData->status;
+        if(!is_null($actionData->type)) {
+            $poll->type = $actionData->type;
+        }
+        $poll->save();
     }
 
     /**

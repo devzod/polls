@@ -14,13 +14,15 @@ class CreatePollActionData extends ActionDataBase
 {
     public array $title;
     public array $text;
-    public int $status = 1;
+    public int $status = 0;
+    public int|null $type;
 
     protected array $rules = [
         'title' => 'required|array',
         'title.*' => 'required|string',
         'text' => 'required|array',
         'text.*' => 'required|string',
-        'status' => 'required|integer',
+        'status' => 'nullable|integer',
+        'type' => 'nullable|integer',
     ];
 }

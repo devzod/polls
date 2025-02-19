@@ -3,6 +3,7 @@
 namespace App\ViewModels\Poll;
 
 use Akbarali\ViewModel\BaseViewModel;
+use App\Enums\PollStatusEnum;
 use App\Models\Pos;
 use Carbon\Carbon;
 
@@ -18,7 +19,7 @@ class PollViewModel extends BaseViewModel
     public int $type;
     public string $title;
     public string|null $text;
-    public bool $status;
+    public int $status;
     public Carbon|string $created_at;
     public Carbon|string $updated_at;
     public string $active_class = "";
@@ -27,7 +28,7 @@ class PollViewModel extends BaseViewModel
     protected function populate()
     {
         $this->created_at = $this->created_at->format('d.m.Y H:i');
-        $this->active_class = $this->status ? "badge-success" : "badge-danger";
-        $this->active_text = $this->status ? trans('content.active') : trans('content.disabled');
+        $this->active_class = $this->status == PollStatusEnum::ACTIVE->value ? "badge-success" : "badge-danger";
+        $this->active_text = $this->status == PollStatusEnum::ACTIVE->value ? trans('content.active') : trans('content.disabled');
     }
 }

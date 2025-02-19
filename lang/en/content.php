@@ -16,4 +16,8 @@ return [
     'participant' => "Participant",
     'male' => "Male",
     'female' => "Female",
+    'questions' => "Questions",
+    'question' => "Question",
+    'options' => "Options",
+    'option' => "Option",
 ];

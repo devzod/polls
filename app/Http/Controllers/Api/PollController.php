@@ -29,7 +29,7 @@ class PollController extends Controller
 
     public function get(int $id): ApiResponse
     {
-        $response = $this->service->getPoll($id);
+        $response = $this->service->getPollLocale($id);
         return ApiResponse::getSuccessResponse($response);
     }
 

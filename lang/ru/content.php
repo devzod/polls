@@ -16,4 +16,8 @@ return [
     'participant' => "Участник",
     'male' => "Мужской",
     'female' => "Женщина",
+    'questions' => "Вопросы",
+    'question' => "Вопрос",
+    'options' => "Варианты",
+    'option' => "Вариант",
 ];
