@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('question_themes', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->unsignedInteger('title_size')->nullable();
             $table->string('title_color')->nullable();
             $table->string('title_align')->nullable();
@@ -21,14 +22,12 @@ return new class extends Migration
             $table->string('text_color')->nullable();
             $table->string('text_align')->nullable();
             $table->string('text_font')->nullable();
-            $table->string('image_position')->nullable();
-            $table->string('image_size')->nullable();
+            $table->string('image_align')->nullable();
+            $table->unsignedInteger('image_size')->nullable();
             $table->string('bg_color')->nullable();
             $table->string('container_color')->nullable();
-            $table->string('container_shadow')->nullable();
             $table->string('border')->nullable();
-            $table->jsonb('style')->nullable();
-            $table->jsonb('script')->nullable();
+            $table->longText('style')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

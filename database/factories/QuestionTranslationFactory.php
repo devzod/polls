@@ -17,7 +17,11 @@ class QuestionTranslationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->sentence(),
+            'text' => $this->faker->paragraph(),
+            'image_title' => $this->faker->randomElement([null, $this->faker->sentence]),
+            'created_at' => $this->faker->dateTime(),
+            'updated_at' => $this->faker->dateTime(),
         ];
     }
 }

@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
             PollSeeder::class,
             StuffSeeder::class,
             ParticipantSeeder::class,
+            QuestionThemeSeeder::class,
+            QuestionSeeder::class,
+            QuestionTranslationSeeder::class
         ]);
     }
 }

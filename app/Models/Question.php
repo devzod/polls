@@ -12,9 +12,11 @@ class Question extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'poll_id',
         'question_theme_id',
         'type',
         'image',
+        'video',
         'bg_image',
         'status',
     ];

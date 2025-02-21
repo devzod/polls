@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image_title')->nullable();
             $table->text('text')->nullable();
             $table->string('locale')->index();
+            $table->unique(['question_id', 'locale']);
             $table->timestamps();
         });
     }

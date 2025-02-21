@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('poll_id')->constrained('polls')->cascadeOnDelete();
             $table->foreignId('question_theme_id')->constrained();
-            $table->tinyInteger('type');
+            $table->string('type');
             $table->string('image')->nullable();
+            $table->string('video')->nullable();
             $table->string('bg_image')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();

@@ -97,7 +97,7 @@
                                                 <i class="fa fa-trash-o text-danger button-2x"></i></a>
                                         @endcan
                                         @can('questions.store')
-                                            <a class="ml-2 btn btn-outline-success" href="{{ route("polls.edit", [$item->id]) }}">Questions</a>
+                                            <a class="ml-2 btn btn-outline-success" href="{{ route("questions.constructor", [$item->id]) }}">Questions</a>
                                         @endcan
                                     </div>
                                 </td>

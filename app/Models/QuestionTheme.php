@@ -12,6 +12,7 @@ class QuestionTheme extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'name',
         'title_size',
         'title_color',
         'title_align',
@@ -20,13 +21,11 @@ class QuestionTheme extends Model
         'text_color',
         'text_align',
         'text_font',
-        'image_position',
+        'image_align',
         'image_size',
         'bg_color',
         'container_color',
-        'container_shadow',
         'border',
-        'style',
-        'script',
+        'style'
     ];
 }

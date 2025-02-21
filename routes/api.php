@@ -2,12 +2,17 @@
 
 use App\Http\Controllers\Api\PollController;
 use App\Http\Controllers\Api\PosController;
+use App\Http\Controllers\Api\QuestionThemeController;
 use App\Http\Controllers\Api\StuffAuthController;
 use App\Http\Controllers\Api\StuffController;
 use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('locales', [LanguageController::class, 'getAll']);
+
+Route::controller(QuestionThemeController::class)->prefix('question-themes')->group(function () {
+    Route::get('all', 'getThemes');
+});
 
 Route::controller(StuffAuthController::class)->prefix('auth')->name('auth.')->group(function () {
     Route::post('login', 'login')->name('login');

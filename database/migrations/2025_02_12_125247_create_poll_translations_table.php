@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('text')->nullable();
             $table->string('locale')->index();
+            $table->unique(['poll_id', 'locale']);
             $table->timestamps();
         });
     }
