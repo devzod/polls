@@ -7,6 +7,8 @@ use App\ActionData\Poll\CreatePollActionData;
 use App\DataObjects\Common\DataObjectCollectionMix;
 use App\DataObjects\Poll\PollData;
 use App\DataObjects\Poll\PollTranslationsData;
+use App\DataObjects\Question\QuestionData;
+use App\DataObjects\Question\QuestionTranslationData;
 use App\DataObjects\TranslationData;
 use App\Enums\PollStatusEnum;
 use App\Models\Poll;
@@ -70,11 +72,17 @@ class PollService
     public function getPollLocale(int $id): PollData
     {
         $poll = Poll::query()
+            ->with('questions.translation')
             ->join('poll_translations', 'polls.id', '=', 'poll_translations.poll_id')
             ->where('polls.status', '=', PollStatusEnum::ACTIVE->value)
             ->where('poll_translations.locale', App::getLocale())
             ->select('polls.*', 'poll_translations.title as title', 'poll_translations.text as text')
             ->findOrFail($id);
+
+        $poll->questions->transform(function ($item) {
+            $item->translation = QuestionTranslationData::fromModel($item->translation);
+            return QuestionData::fromModel($item);
+        });
         return PollData::fromModel($poll);
     }
 

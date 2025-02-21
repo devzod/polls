@@ -4,6 +4,7 @@ namespace App\DataObjects\Poll;
 
 use Akbarali\DataObject\DataObjectBase;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 /**
  * Author: Bekzod Raximov
@@ -20,4 +21,5 @@ class PollData extends DataObjectBase
     public bool $status;
     public Carbon $created_at;
     public Carbon $updated_at;
+    public Collection|null $questions;
 }

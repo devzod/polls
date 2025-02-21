@@ -10,8 +10,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('locales', [LanguageController::class, 'getAll']);
 
-Route::controller(QuestionThemeController::class)->prefix('question-themes')->group(function () {
-    Route::get('all', 'getThemes');
+Route::prefix('admin')->group(function () {
+    Route::controller(QuestionThemeController::class)->prefix('themes')->group(function () {
+        Route::get('all', 'getThemes');
+    });
+
+    Route::controller(PollController::class)->prefix('polls')->group(function () {
+        Route::get('get/{id}', 'get')->name('get');
+    });
 });
 
 Route::controller(StuffAuthController::class)->prefix('auth')->name('auth.')->group(function () {

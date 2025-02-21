@@ -20,4 +20,9 @@ class Poll extends Model
     {
         return $this->hasMany(PollTranslation::class, 'poll_id', 'id');
     }
+
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class, 'poll_id', 'id');
+    }
 }

@@ -1,18 +1,18 @@
 <template>
-    <div class="col-8">
+    <div :class="activeQuestion ? 'col-8' : 'col'">
         <div class="card mb-4 shadow-1">
             <div class="card-header">
                 <div class="card-header-title">
-                    <h5>Poll name</h5>
+                    <h5>{{poll.title}}</h5>
                 </div>
                 <div class="btn btn-outline-success"><i class="fa fa-plus button-2x"> Добавить question</i></div>
             </div>
             <div class="card-body">
-                <Question :currentTheme="currentTheme" />
+                <Question v-if="!activeQuestion" :questions="poll.questions" />
             </div>
         </div>
     </div>
-    <div class="col-4">
+    <div v-if="activeQuestion" class="col-4">
         <div class="card mb-4 shadow-1">
             <div class="card-header">
                 <div class="card-header-title"><h5>Uskunalar</h5></div>
@@ -131,8 +131,15 @@ export default {
     },
     data() {
         return {
+            poll: {
+                id: window.location.pathname.split('/').pop(),
+                title: '',
+                text: null,
+                questions: null
+            },
             themes: null,
             currentThemeId: null,
+            activeQuestion: null,
             currentTheme: {
                 name : '',
                 title_size : 16,
@@ -161,18 +168,29 @@ export default {
         }
     },
     mounted() {
-        this.getTheme();
+        this.getThemes();
+        this.getPoll(this.poll.id);
     },
     methods: {
-        getTheme() {
-            axios.get(baseUrl + '/question-themes/all').then((response) => {
-                console.log(response.data.data);
+        getThemes() {
+            axios.get(baseUrl + '/admin/themes/all').then((response) => {
                 this.themes = response.data.data;
             }).catch((error) => {
                 this.error = error;
                 console.log('xatolik', error.response.data);
             })
         },
+        getPoll(id) {
+            axios.get(baseUrl + '/admin/polls/get/' + id).then((response) => {
+                this.poll.title = response.data.data.title;
+                this.poll.text = response.data.data.text;
+                this.poll.questions = response.data.data.questions;
+                console.log(this.poll);
+            }).catch((error) => {
+                this.error = error;
+                console.log('xatolik', error.response.data);
+            })
+        }
     }
 }
 </script>
