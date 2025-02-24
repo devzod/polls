@@ -21,7 +21,7 @@ class QuestionFactory extends Factory
         return [
             'poll_id' => $this->faker->randomElement(Poll::all()->pluck('id')->toArray()),
             'question_theme_id' => $this->faker->randomElement(QuestionTheme::all()->pluck('id')->toArray()),
-            'type' => $this->faker->randomElement(['text', 'image', 'radio', 'multiple', 'video']),
+            'type' => $this->faker->randomElement(['text', 'image', 'radio', 'multiple']),
             'image' => $this->faker->randomElement([null, 'storage/questions/question.jgp']),
             'video' => $this->faker->randomElement([null, $this->faker->imageUrl()]),
             'bg_image' => $this->faker->randomElement([null, 'storage/questions/bg_image.jgp']),

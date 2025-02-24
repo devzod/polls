@@ -149,7 +149,9 @@ return [
         'code' => 'Kod',
         'status' => 'Status',
         'login' => "Login",
-        'type' => "Tip"
+        'type' => "Tip",
+        'image' => 'Rasm',
+        'video' => 'Video',
     ],
 
 ];

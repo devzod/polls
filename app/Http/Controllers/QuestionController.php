@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Akbarali\ViewModel\PaginationViewModel;
 use App\Enums\QuestionTypeEnum;
 use App\Filters\Question\QuestionSearchFilter;
+use App\Services\LanguageService;
 use App\Services\PollService;
 use App\Services\QuestionService;
 use App\ViewModels\Question\QuestionViewModel;
@@ -13,7 +14,11 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function __construct(protected QuestionService $service, protected PollService $pollService)
+    public function __construct(
+        protected QuestionService $service,
+        protected PollService $pollService,
+        protected LanguageService $languageService,
+    )
     {
     }
 
@@ -37,5 +42,18 @@ class QuestionController extends Controller
     public function constructor(): View
     {
         return view('admin.questions.constructor');
+    }
+
+    public function create(int $pollId): View
+    {
+        $poll = $this->pollService->getPollLocale($pollId);
+        $locales = $this->languageService->getAll();
+        $types = QuestionTypeEnum::cases();
+        return view('admin.questions.create', compact('pollId', 'locales', 'types', 'poll'));
+    }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
     }
 }

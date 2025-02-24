@@ -12,7 +12,6 @@ namespace App\Enums;
 enum QuestionTypeEnum: string
 {
     case IMAGE = 'image';
-    case VIDEO = 'video';
     case TEXT = 'text';
     case RADIO = 'radio';
     case MULTIPLE = 'multiple';

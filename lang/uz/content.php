@@ -17,4 +17,5 @@ return [
     'question' => "Savol",
     'options' => "Variantlar",
     'option' => "Variant",
+    'image_title' => "Rasm izohi",
 ];

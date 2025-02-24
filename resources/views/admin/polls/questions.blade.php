@@ -8,7 +8,7 @@
                         <h5>{{$poll->title}}</h5>
                     </div>
                     @can('polls.store')
-                        <a href="{{ route("polls.questions.create") }}" class="btn btn-outline-success">
+                        <a href="{{ route("polls.questions.create", $poll->id) }}" class="btn btn-outline-success">
                             <i class="fa fa-plus button-2x"> {{ __('form.add') }} {{ __('content.question') }}</i></a>
                     @endcan
                 </div>
@@ -16,7 +16,7 @@
                     <table class="table table-striped table-responsive-sm">
                         <thead>
                         <tr>
-                            <form action="?" method="get" id="paginate">
+                            <form action="?" method="get" id="paginate" >
                                 <td>
                                     <select class="form-control select2 select2-hidden-accessible" name="limit"
                                             style="width: 65px" onchange="$('#paginate').submit()">
@@ -76,7 +76,10 @@
                                 <th scope="row">{{ ($pagination->currentpage()-1) * $pagination->perpage() + $loop->index + 1 }}</th>
                                 <td>{{ $item->title }}</td>
                                 <td>{{$item->text}}</td>
-                                <td><img src="{{$item->image}}" alt=""></td>
+                                <td>
+                                    @if($item->image)
+                                        <img src="{{asset($item->image)}}" alt="{{$item->imageTitle}}"></td>
+                                    @endif
                                 <td class="text-uppercase"><b>{{$item->type}}</b></td>
                                 <td><span class="badge badge-pill {{$item->active_class}}">{{ $item->active_text }}</span></td>
                                 <td>

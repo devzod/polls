@@ -192,6 +192,8 @@ return [
     'attributes' => [
         'login' => "Login",
         'type' => 'Type',
+        'image' => 'Image',
+        'video' => 'Video',
     ],
 
 ];

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('option_translations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('option_id')->constrained('options')->cascadeOnDelete();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('text')->nullable();
             $table->string('image_title')->nullable();
             $table->string('locale')->index();

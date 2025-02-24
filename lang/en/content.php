@@ -20,4 +20,5 @@ return [
     'question' => "Question",
     'options' => "Options",
     'option' => "Option",
+    'image_title' => "Image Title",
 ];

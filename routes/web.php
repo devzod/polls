@@ -106,8 +106,8 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
         Route::controller(QuestionController::class)->name('questions.')->group(function () {
             Route::get('{pollId}/questions', 'pollQuestions')->name('pollQuestions')->can('questions.index');
             Route::get('questions/show/{id}', 'show')->name('show')->can('questions.index');
-            Route::get('questions/create', 'create')->name('create')->can('questions.store');
-            Route::post('questions/store', 'store')->name('store')->can('questions.store');
+            Route::get('{pollId}/questions/create', 'create')->name('create')->can('questions.store');
+            Route::post('{pollId}/questions/store', 'store')->name('store')->can('questions.store');
             Route::get('questions/edit/{id}', 'edit')->name('edit')->can('questions.update');
             Route::put('questions/update/{id}', 'update')->name('update')->can('questions.update');
             Route::get('questions/constructor/{id}', 'constructor')->name('constructor')->can('questions.update');
