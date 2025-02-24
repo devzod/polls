@@ -25,7 +25,9 @@ class DatabaseSeeder extends Seeder
             ParticipantSeeder::class,
             QuestionThemeSeeder::class,
             QuestionSeeder::class,
-            QuestionTranslationSeeder::class
+            QuestionTranslationSeeder::class,
+            OptionSeeder::class,
+            OptionTranslationSeeder::class,
         ]);
     }
 }

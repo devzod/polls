@@ -149,7 +149,7 @@ return [
         'code' => 'Kod',
         'status' => 'Status',
         'login' => "Login",
-
+        'type' => "Tip"
     ],
 
 ];

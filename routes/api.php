@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\PollController;
 use App\Http\Controllers\Api\PosController;
+use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\QuestionThemeController;
 use App\Http\Controllers\Api\StuffAuthController;
 use App\Http\Controllers\Api\StuffController;
@@ -17,6 +18,10 @@ Route::prefix('admin')->group(function () {
 
     Route::controller(PollController::class)->prefix('polls')->group(function () {
         Route::get('get/{id}', 'get')->name('get');
+
+        Route::controller(QuestionController::class)->prefix('questions')->group(function () {
+            Route::get('get/{id}', 'get');
+        });
     });
 });
 

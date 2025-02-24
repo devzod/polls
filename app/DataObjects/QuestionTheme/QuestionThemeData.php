@@ -15,18 +15,19 @@ class QuestionThemeData extends DataObjectBase
 {
     public int $id;
     public string $name;
-    public int $title_size;
-    public string $title_color;
-    public string $title_align;
-    public string $title_font;
-    public int $text_size;
-    public string $text_color;
-    public string $text_align;
-    public string $text_font;
-    public string $image_align;
-    public string $image_size;
-    public string $bg_color;
-    public string $container_color;
+    public int $titleSize;
+    public string $titleColor;
+    public string $titleAlign;
+    public string $titleFont;
+    public int $textSize;
+    public string $textColor;
+    public string $textAlign;
+    public string $textFont;
+    public string $imageAlign;
+    public string $imageSize;
+    public string|null $bgColor;
+    public string|null $containerColor;
+    public string|null $optionColor;
     public string|null $border;
     public string|null $style;
 

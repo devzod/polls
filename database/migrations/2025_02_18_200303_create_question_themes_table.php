@@ -26,6 +26,7 @@ return new class extends Migration
             $table->unsignedInteger('image_size')->nullable();
             $table->string('bg_color')->nullable();
             $table->string('container_color')->nullable();
+            $table->string('option_color')->nullable();
             $table->string('border')->nullable();
             $table->longText('style')->nullable();
             $table->timestamps();

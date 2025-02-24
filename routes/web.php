@@ -103,13 +103,14 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
         Route::put('/update/{id}', 'update')->name('update')->can('polls.update');
         Route::get('delete/{id}', 'delete')->name('delete')->can('polls.delete');
 
-        Route::controller(QuestionController::class)->name('questions.')->prefix('questions')->group(function () {
-            Route::get('/{pollId}', 'pollQuestions')->name('pollQuestions')->can('questions.index');
-            Route::get('create', 'create')->name('create')->can('questions.store');
-            Route::post('/store', 'store')->name('store')->can('questions.store');
-            Route::get('edit/{id}', 'edit')->name('edit')->can('questions.update');
-            Route::put('/update/{id}', 'update')->name('update')->can('questions.update');
-            Route::get('constructor/{id}', 'constructor')->name('constructor')->can('questions.update');
+        Route::controller(QuestionController::class)->name('questions.')->group(function () {
+            Route::get('{pollId}/questions', 'pollQuestions')->name('pollQuestions')->can('questions.index');
+            Route::get('questions/show/{id}', 'show')->name('show')->can('questions.index');
+            Route::get('questions/create', 'create')->name('create')->can('questions.store');
+            Route::post('questions/store', 'store')->name('store')->can('questions.store');
+            Route::get('questions/edit/{id}', 'edit')->name('edit')->can('questions.update');
+            Route::put('questions/update/{id}', 'update')->name('update')->can('questions.update');
+            Route::get('questions/constructor/{id}', 'constructor')->name('constructor')->can('questions.update');
         });
     });
 

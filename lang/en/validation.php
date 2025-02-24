@@ -191,6 +191,7 @@ return [
 
     'attributes' => [
         'login' => "Login",
+        'type' => 'Type',
     ],
 
 ];

@@ -3,6 +3,7 @@
 namespace App\DataObjects\Question;
 
 use Akbarali\DataObject\DataObjectBase;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Author: Bekzod Raximov
@@ -13,13 +14,14 @@ use Akbarali\DataObject\DataObjectBase;
 class QuestionLocaleData extends DataObjectBase
 {
     public int $id;
-    public int $poll_id;
-    public int $question_theme_id;
+    public int $pollId;
+    public int $questionThemeId;
     public string $type;
     public string|null $image;
-    public string|null $bg_image;
+    public string|null $bgImage;
     public bool $status;
     public string $title;
     public string|null $text;
-    public string|null $image_title;
+    public string|null $imageTitle;
+    public Collection|null $options;
 }

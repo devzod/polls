@@ -25,6 +25,7 @@ class QuestionTheme extends Model
         'image_size',
         'bg_color',
         'container_color',
+        'option_color',
         'border',
         'style'
     ];

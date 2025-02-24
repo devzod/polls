@@ -34,4 +34,9 @@ class Question extends Model
     {
         return $this->hasMany(QuestionTranslation::class, 'question_id', 'id');
     }
+
+    public function options(): HasMany
+    {
+        return $this->hasMany(Option::class, 'question_id', 'id');
+    }
 }

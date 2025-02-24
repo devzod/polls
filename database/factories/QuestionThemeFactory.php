@@ -30,6 +30,7 @@ class QuestionThemeFactory extends Factory
             'image_size' => $this->faker->randomElement(['100', '50', '75', '25']),
             'bg_color' => $this->faker->rgbColor(),
             'container_color' => $this->faker->hexColor(),
+            'option_color' => $this->faker->hexColor(),
             'border' => "1px solid #000",
         ];
     }
