@@ -21,7 +21,7 @@ class OptionFactory extends Factory
         return [
             'question_id' => $this->faker->randomElement(Question::all()->pluck('id')->toArray()),
             'next_question_id' => $this->faker->randomElement([null, ...$questions ]),
-            'image' => $this->faker->randomElement([null, 'storage/options/option.jgp']),
+            'image' => $this->faker->randomElement([null, 'options/option.jgp']),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];

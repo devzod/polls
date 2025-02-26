@@ -85,7 +85,6 @@
                                 <td>{{$item->created_at}}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <a href="{{ route("polls.show", [$item->id]) }}"><i class="fa fa-eye text-purple button-2x"></i></a>
                                         @can('polls.update')
                                             <a class="mg-x-10" href="{{ route("polls.edit", [$item->id]) }}">
                                                 <i class="fa fa-edit text-purple button-2x"></i></a>
@@ -97,7 +96,7 @@
                                                 <i class="fa fa-trash-o text-danger button-2x"></i></a>
                                         @endcan
                                         @can('questions.store')
-                                            <a class="ml-2 btn btn-outline-success" href="{{ route("polls.questions.pollQuestions", [$item->id]) }}">Questions</a>
+                                            <a class="ml-2 btn btn-outline-success" href="{{ route("polls.questions", [$item->id]) }}">@lang('content.questions')</a>
                                         @endcan
                                     </div>
                                 </td>

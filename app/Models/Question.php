@@ -16,7 +16,6 @@ class Question extends Model
     use HasFactory, SoftDeletes, EloquentFilterTrait;
 
     protected $fillable = [
-        'poll_id',
         'question_theme_id',
         'type',
         'image',

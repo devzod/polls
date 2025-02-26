@@ -1,9 +1,9 @@
 @extends('layouts.main')
 @section('content')
-    <form class="row" method="POST" action="{{route('polls.questions.store', $poll->id)}}" enctype="multipart/form-data">
-        <div class="col-12 mt-3">
-            <h4 class="text-center">@lang('content.question') : {{ $poll->title }}</h4>
-        </div>
+    @if(session()->get('errors'))
+        @dump( session()->get('errors')->first());
+    @endif
+    <form class="row" method="POST" action="{{route('questions.store')}}" enctype="multipart/form-data">
         <div class="col-4">
             <div class="card mb-4 shadow-1">
                 <div class="card-header"><h4 class="card-header-title">{{ __('content.question') }}</h4></div>
@@ -42,6 +42,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#navs-top-profile">{{ __('validation.attributes.video') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#navs-top-bg_image">Background {{ __('validation.attributes.image') }}</a>
+                            </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="navs-top-home">
@@ -78,6 +81,20 @@
                                                    name="video" value="{{ old('video') }}">
                                             @if($errors->has('video'))
                                                 <div class="text-danger">{{ $errors->first('video') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="navs-top-bg_image">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="bg_image">{{ __('validation.attributes.image') }}</label>
+                                            <input type="file" class="form-control" id="bg_image"
+                                                   name="bg_image" value="{{ old('bg_image') }}">
+                                            @if($errors->has('bg_image'))
+                                                <div class="text-danger">{{ $errors->first('bg_image') }}</div>
                                             @endif
                                         </div>
                                     </div>
@@ -127,6 +144,7 @@
             const radioBlock = `<div class="card shadow-1 type_block radio_block mb-2">
                         <div class="card-header">
                             <h4 class="card-header-title"><span class="option_counter">1</span> @lang('content.option')</h4>
+                            <div class="btn btn-outline-success mr-2"><i class="fa fa-plus button-2x">{{ __('form.add') }} {{ __('content.in_question') }}</i></div>
                             <div class="card-header-btn">
                                 <div class="collapse_btn btn btn-info"><i class="ion-ios-arrow-down"></i></div>
                                 <div class="delete_btn btn btn-danger"><i class="ion-ios-trash-outline"></i></div>
@@ -139,7 +157,7 @@
                 <label for="option_title_{{$locale->code}}">{{ __('content.option') }}
             ({{$locale->name}})</label>
                                         <input type="text" class="form-control option_title" id="option_title_{{$locale->code}}"
-                                               name="option_title[][{{$locale->code}}]" required
+                                               name="option_title[1][{{$locale->code}}]" required
                                                value="{{ old('option_title['.$locale->code.']') }}">
                                         @if($errors->has('option_title['.$locale->code.']'))
             <div
@@ -154,6 +172,7 @@
             const multipleBlock = `<div class="card shadow-1 type_block multiple_block mb-2">
                         <div class="card-header">
                             <h4 class="card-header-title"><span class="option_counter">1</span> @lang('content.option')</h4>
+                            <div class="btn btn-outline-success mr-2"><i class="fa fa-plus button-2x">{{ __('form.add') }} {{ __('content.in_question') }}</i></div>
                             <div class="card-header-btn">
                                 <div class="collapse_btn btn btn-info"><i class="ion-ios-arrow-down"></i></div>
                                 <div class="delete_btn btn btn-danger"><i class="ion-ios-trash-outline"></i></div>
@@ -189,9 +208,10 @@
             const imageBlock = `<div class="card shadow-1 type_block image_block mb-2">
                         <div class="card-header">
                             <h4 class="card-header-title"><span class="option_counter">1</span> @lang('content.option')</h4>
+                            <div class="btn btn-outline-success mr-2"><i class="fa fa-plus button-2x">{{ __('form.add') }} {{ __('content.in_question') }}</i></div>
                             <div class="card-header-btn">
                                 <div class="collapse_btn btn btn-info"><i class="ion-ios-arrow-down"></i></div>
-                                <a href="javascript:void(0)" data-toggle="remove" class="btn btn-danger"><i class="ion-ios-trash-outline"></i></a>
+                                <div class="delete_btn btn btn-danger"><i class="ion-ios-trash-outline"></i></div>
                             </div>
                         </div>
                         <div class="card-body collapse show">
@@ -224,9 +244,7 @@
 
             const addBtn = $('#add_option');
             const optionsBlock = $('#options_block');
-            types.on('change', function () {
-                type = $(this).val();
-                $('.type_block').remove();
+            function appendBlock(type) {
                 switch (type) {
                     case "image" :
                         optionsBlock.append(imageBlock);
@@ -245,7 +263,13 @@
                         addBtn.show()
                         break
                 }
-            })
+            }
+            appendBlock(type);
+            types.on('change', function () {
+                type = $(this).val();
+                $('.type_block').remove();
+                appendBlock(type)
+            });
 
             addBtn.click(function () {
                 if (type && type !== 'text') {
@@ -273,10 +297,15 @@
             $(document).on('click', '.delete_btn', function () {
                 if($('.type_block').length > 1) {
                     $(this).closest('.type_block').remove();
+                    $('.type_block').each(function (i = 0){
+                        $(this).find('.option_counter').html(i+1);
+                        $(this).find('.option_title').each(function () {
+                            let name = $(this).attr('name');
+                            let newName = name.replace(/\[\d+\]/, `[${i + 1}]`);
+                            $(this).attr('name', newName);
+                        });
+                    });
                 }
-                $('.type_block').each(function (i = 0){
-                    $(this).find('.option_counter').html(i+1);
-                })
             });
         });
     </script>

@@ -98,20 +98,22 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
         Route::get('index', 'index')->name('index')->can('polls.index');
         Route::get('create', 'create')->name('create')->can('polls.store');
         Route::post('/store', 'store')->name('store')->can('polls.store');
-        Route::get('show/{id}', 'show')->name('show')->can('polls.index');
         Route::get('edit/{id}', 'edit')->name('edit')->can('polls.update');
         Route::put('/update/{id}', 'update')->name('update')->can('polls.update');
         Route::get('delete/{id}', 'delete')->name('delete')->can('polls.delete');
+        Route::get('{id}/questions', [QuestionController::class, 'pollQuestions'])->name('questions')->can('questions.index');
+    });
 
-        Route::controller(QuestionController::class)->name('questions.')->group(function () {
-            Route::get('{pollId}/questions', 'pollQuestions')->name('pollQuestions')->can('questions.index');
-            Route::get('questions/show/{id}', 'show')->name('show')->can('questions.index');
-            Route::get('{pollId}/questions/create', 'create')->name('create')->can('questions.store');
-            Route::post('{pollId}/questions/store', 'store')->name('store')->can('questions.store');
-            Route::get('questions/edit/{id}', 'edit')->name('edit')->can('questions.update');
-            Route::put('questions/update/{id}', 'update')->name('update')->can('questions.update');
-            Route::get('questions/constructor/{id}', 'constructor')->name('constructor')->can('questions.update');
-        });
+    //Questions
+    Route::controller(QuestionController::class)->name('questions.')->prefix('questions')->group(function () {
+        Route::get('index', 'index')->name('index')->can('questions.index');
+        Route::get('show/{id}', 'show')->name('show')->can('questions.index');
+        Route::get('create', 'create')->name('create')->can('questions.store');
+        Route::post('store', 'store')->name('store')->can('questions.store');
+        Route::get('edit/{id}', 'edit')->name('edit')->can('questions.update');
+        Route::put('update/{id}', 'update')->name('update')->can('questions.update');
+        Route::get('delete/{id}', 'delete')->name('delete')->can('questions.delete');
+        Route::get('constructor/{id}', 'constructor')->name('constructor')->can('questions.update');
     });
 
     // STUFF

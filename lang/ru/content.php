@@ -18,6 +18,7 @@ return [
     'female' => "Женщина",
     'questions' => "Вопросы",
     'question' => "Вопрос",
+    'in_question' => "Под вопрос",
     'options' => "Варианты",
     'option' => "Вариант",
     'image_title' => "Описание изображения",

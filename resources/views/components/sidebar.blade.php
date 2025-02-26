@@ -58,6 +58,11 @@
                         <a href="{{route('polls.index')}}"><i class="fa fa-list-alt"></i><span>{{__('content.polls')}}</span></a>
                     </li>
                 @endcan
+                @can('questions.index')
+                    <li @if(request()->routeIs('questions.*')) class="active" @endif>
+                        <a href="{{route('questions.index')}}"><i class="fa fa-question"></i><span>{{__('content.questions')}}</span></a>
+                    </li>
+                @endcan
                 @can('participants.index')
                     <li @if(request()->routeIs('participants.*')) class="active" @endif>
                         <a href="{{route('participants.index')}}"><i class="fa fa-users"></i><span>{{__('content.participants')}}</span></a>

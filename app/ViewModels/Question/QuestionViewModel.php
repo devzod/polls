@@ -13,8 +13,7 @@ use Akbarali\ViewModel\BaseViewModel;
 class QuestionViewModel extends BaseViewModel
 {
     public int $id;
-    public int $pollId;
-    public int $questionThemeId;
+    public int|null $questionThemeId;
     public string $type;
     public string|null $image;
     public string|null $bgImage;

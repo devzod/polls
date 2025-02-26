@@ -18,6 +18,7 @@ return [
     'female' => "Female",
     'questions' => "Questions",
     'question' => "Question",
+    'in_question' => "Under question",
     'options' => "Options",
     'option' => "Option",
     'image_title' => "Image Title",

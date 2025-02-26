@@ -5,7 +5,7 @@
             <div class="card mb-4 shadow-1">
                 <div class="card-header">
                     <div class="card-header-title">
-                        <h5>{{$poll->title}}</h5>
+                        <h5>@lang('content.questions')</h5>
                     </div>
                     @can('questions.store')
                         <a href="{{ route("questions.create") }}" class="btn btn-outline-success">
@@ -20,10 +20,9 @@
                                 <td>
                                     <select class="form-control select2 select2-hidden-accessible" name="limit"
                                             style="width: 65px" onchange="$('#paginate').submit()">
-                                        <option value="10" @selected(request('limit') == 10)>10</option>
-                                        <option
-                                            value="15" @selected(request('limit') == 15 || is_null(request('limit')))>15
-                                        </option>
+                                        <option value="5" @selected(request('limit') == 5)>5</option>
+                                        <option value="10" @selected(request('limit') == 10 || is_null(request('limit')))>10</option>
+                                        <option value="15" @selected(request('limit') == 15)>15</option>
                                         <option value="20" @selected(request('limit') == 20)>20</option>
                                         <option value="30" @selected(request('limit') == 30)>30</option>
                                     </select>
@@ -36,6 +35,7 @@
                                 <td>
                                     <input type="text" class="form-control" name="text" placeholder="{{ __('validation.attributes.description') }} ..." value="{{ request('text') }}">
                                 </td>
+                                <td></td>
                                 <td>
                                     <select class="form-control w-auto" id="type" name="type">
                                         <option value="" selected disabled>{{ __('form.choose') }} {{ __('validation.attributes.type') }}</option>
@@ -54,7 +54,7 @@
                                 <td>
                                     <div class="row">
                                         <button class="btn btn-primary me-2"><i class="fa fa-search"></i></button>
-                                        <a href="{{ route('polls.questions', $poll->id) }}" class="btn btn-outline-info"><i class="fa fa-refresh"></i></a>
+                                        <a href="{{ route('questions.index') }}" class="btn btn-outline-info"><i class="fa fa-refresh"></i></a>
                                     </div>
                                 </td>
                             </form>

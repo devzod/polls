@@ -14,13 +14,12 @@ use Illuminate\Database\Eloquent\Collection;
 class QuestionLocaleData extends DataObjectBase
 {
     public int $id;
-    public int $pollId;
-    public int $questionThemeId;
+    public int|null $questionThemeId;
     public string $type;
     public string|null $image;
     public string|null $bgImage;
     public bool $status;
-    public string $title;
+    public string|null $title;
     public string|null $text;
     public string|null $imageTitle;
     public Collection|null $options;

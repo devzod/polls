@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_id')->constrained('questions')->cascadeOnDelete();
+            $table->foreignId('question_id')->constrained()->cascadeOnDelete();
             $table->foreignId('next_question_id')->nullable()->constrained('questions')->nullOnDelete();
             $table->string('image')->nullable();
             $table->boolean('status')->default(true);

@@ -33,15 +33,6 @@ class PollController extends Controller
     }
 
     /**
-     * @param int $id
-     * @return View
-     */
-    public function show(int $id): View
-    {
-        return view('admin.polls.show');
-    }
-
-    /**
      * @return View
      */
     public function create(): View

@@ -15,6 +15,7 @@ return [
     'female' => "Ayol",
     'questions' => "Savollar",
     'question' => "Savol",
+    'in_qestion' => "Ichki savol",
     'options' => "Variantlar",
     'option' => "Variant",
     'image_title' => "Rasm izohi",
