@@ -5,6 +5,7 @@ namespace App\Services;
 
 use Akbarali\DataObject\DataObjectCollection;
 use App\ActionData\Question\CreateQuestionActionData;
+use App\ActionData\Question\UpdateQuestionActionData;
 use App\DataObjects\Option\OptionAdminData;
 use App\DataObjects\Option\OptionData;
 use App\DataObjects\Option\OptionTranslationData;
@@ -56,14 +57,18 @@ class QuestionService
     }
 
     /**
+     * @param int|null $id
      * @return Collection
      */
-    public function getAll():Collection
+    public function getAll(int|null $id = null):Collection
     {
         $model = Question::query()
             ->join('question_translations', 'questions.id', '=', 'question_translations.question_id')
             ->where('question_translations.locale', '=', App::getLocale())
             ->where('questions.status', '=', true);
+        if ($id !== null) {
+            $model = $model->where('questions.id', '!=', $id);
+        }
             $model->select('questions.*', 'question_translations.title as title',
                 'question_translations.text as text', 'question_translations.image_title as image_title')
             ->orderByDesc('questions.id');
@@ -242,6 +247,45 @@ class QuestionService
             DB::rollBack();
             throw $exception;
         }
+    }
+
+    /**
+     * @param int $id
+     * @param UpdateQuestionActionData $actionData
+     * @return void
+     */
+    public function updateQuestion(int $id, UpdateQuestionActionData $actionData): void
+    {
+        $question = Question::query()->with('translations')->findOrFail($id);
+        if ($actionData->image) {
+            $image = $actionData->image->storePubliclyAs('questions', $actionData->image->hashName(), 'public');
+            if ($question->image) {
+                Storage::disk('public')->delete($question->image);
+            }
+            $question->image = $image;
+        }
+        if ($actionData->bg_image) {
+            $bg_image = $actionData->bg_image->storePubliclyAs('questions', $actionData->bg_image->hashName(), 'public');
+            if ($question->bg_image) {
+                Storage::disk('public')->delete($question->bg_image);
+            }
+            $question->bg_image = $bg_image;
+        }
+        if ($actionData->video) {
+            $video = $actionData->video->storePubliclyAs('questions', $actionData->video->hashName(), 'public');
+            if ($question->video) {
+                Storage::disk('public')->delete($question->video);
+            }
+            $question->video = $video;
+        }
+        $question->type = $actionData->type;
+        foreach ($question->translations as $translation) {
+            $translation->title = $actionData->title[$translation->locale];
+            $translation->text = $actionData->text[$translation->locale] ?? null;
+            $translation->image_title = $actionData->image_title[$translation->locale] ?? null;
+            $translation->save();
+        }
+        $question->save();
     }
 
     /**

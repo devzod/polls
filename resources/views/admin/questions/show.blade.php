@@ -1,8 +1,5 @@
 @extends('layouts.main')
 @section('content')
-    @if(session()->get('errors'))
-        @dump( session()->get('errors')->first());
-    @endif
     <div class="row">
         <div class="col-4">
             <div class="card mb-4 shadow-1">

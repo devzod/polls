@@ -1,8 +1,5 @@
 @extends('layouts.main')
 @section('content')
-    @if(session()->get('errors'))
-        @dump( session()->get('errors')->first());
-    @endif
     @if($poll)
         <div class="text mt-3">
             <h3>@lang('form.add') в @lang('content.poll') : {{$poll->title}}</h3>

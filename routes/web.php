@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PollController;
@@ -116,6 +117,14 @@ Route::middleware(['auth', 'lang'])->prefix('admin')->group(function () {
         Route::put('update/{id}', 'update')->name('update')->can('questions.update');
         Route::get('delete/{id}', 'delete')->name('delete')->can('questions.delete');
         Route::get('constructor/{id}', 'constructor')->name('constructor')->can('questions.update');
+    });
+
+    //Options
+    Route::controller(OptionController::class)->name('options.')->prefix('options')->group(function () {
+        Route::post('store/{questionId}', 'store')->name('store')->can('questions.update');
+        Route::post('delete/{optionId}', 'delete')->name('delete')->can('questions.update');
+        Route::post('remove-next/{optionId}', 'removeNext')->name('removeNext')->can('questions.update');
+        Route::put('update/{id}', 'update')->name('update')->can('questions.index');
     });
 
     // STUFF

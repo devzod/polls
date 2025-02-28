@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Akbarali\ViewModel\PaginationViewModel;
 use App\ActionData\Question\CreateQuestionActionData;
+use App\ActionData\Question\UpdateQuestionActionData;
 use App\Enums\QuestionTypeEnum;
 use App\Filters\Question\QuestionSearchFilter;
 use App\Services\LanguageService;
@@ -102,7 +103,16 @@ class QuestionController extends Controller
         $question = $this->service->getQuestionAdmin($id);
         $locales = $this->languageService->getAll();
         $types = QuestionTypeEnum::cases();
-        return view('admin.questions.edit', compact( 'locales', 'types', 'question'));
+        $allQuestions = $this->service->getAll($id);
+        return view('admin.questions.edit', compact( 'locales', 'types', 'question', 'allQuestions'));
+    }
+
+    public function update(int $id, UpdateQuestionActionData $actionData): RedirectResponse
+    {
+        $this->service->updateQuestion($id, $actionData);
+        return redirect()->back()
+            ->with('success', trans('form.success_update', ['attribute' => trans('content.question')]));
+
     }
 
     /**
