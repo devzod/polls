@@ -3,28 +3,23 @@
     @if(session()->get('errors'))
         @dump( session()->get('errors')->first());
     @endif
-    @if($poll)
-        <div class="text mt-3">
-            <h3>@lang('form.add') в @lang('content.poll') : {{$poll->title}}</h3>
-        </div>
-    @endif
-    <form class="row" method="POST" action="{{route('questions.store')}}" enctype="multipart/form-data">
+    <form class="row" method="POST" action="{{route('questions.update', $question->id)}}" enctype="multipart/form-data">
         <div class="col-4">
             <div class="card mb-4 shadow-1">
                 <div class="card-header"><h4 class="card-header-title">{{ __('content.question') }}</h4></div>
                 <div class="card-body">
                     <div class="form-row">
                         @csrf
-                        @if($poll)
-                            <input type="hidden" name="poll_id" value="{{$poll->id}}">
-                        @endif
                         @foreach($locales as $locale)
+                            @php
+                                $translation = $question->translations->firstWhere('locale', $locale->code);
+                            @endphp
                             <div class="col-md-12 mb-3">
                                 <label for="title_{{$locale->code}}">{{ __('content.question') }}
                                     ({{$locale->name}})</label>
                                 <input type="text" class="form-control" id="title_{{$locale->code}}"
                                        name="title[{{$locale->code}}]" required
-                                       value="{{ old('title['.$locale->code.']') }}">
+                                       value="{{ $translation->title}}">
                                 @if($errors->has('title['.$locale->code.']'))
                                     <div class="text-danger">{{ $errors->first('title['.$locale->code.']') }}</div>
                                 @endif
@@ -34,7 +29,7 @@
                                     ({{$locale->name}})</label>
                                 <textarea class="form-control" id="text_{{$locale->code}}"
                                           name="text[{{$locale->code}}]"
-                                          rows="3">{{old("text['.$locale->code.']")}}</textarea>
+                                          rows="3">{{$translation->text}}</textarea>
                                 @if($errors->has('text['.$locale->code.']'))
                                     <div class="text-danger">{{ $errors->first('text['.$locale->code.']') }}</div>
                                 @endif
@@ -59,6 +54,9 @@
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="col-12 mb-3">
+                                            @if($question->image)
+                                                <div class="mb-2"><img class="img-thumbnail" width="100" src="{{asset('storage/'.$question->image)}}" alt=""></div>
+                                            @endif
                                             <label for="image">{{ __('validation.attributes.image') }}</label>
                                             <input type="file" class="form-control" id="image"
                                                    name="image" value="{{ old('image') }}"
@@ -68,10 +66,13 @@
                                             @endif
                                         </div>
                                         @foreach($locales as $locale)
+                                            @php
+                                                $translation = $question->translations->firstWhere('locale', $locale->code);
+                                            @endphp
                                             <div class="col-12 mb-2">
                                                 <label for="image_title{{$locale->code}}">{{ __('content.image_title') }} ({{$locale->name}})</label>
                                                 <input type="text" class="form-control" id="image_title{{$locale->code}}"
-                                                       name="image_title[{{$locale->code}}]" value="{{ old('image_title['.$locale->code.']') }}">
+                                                       name="image_title[{{$locale->code}}]" value="{{ old('image_title['.$locale->code.']', $translation->image_title) }}">
                                                 @if($errors->has('image_title['.$locale->code.']'))
                                                     <div class="text-danger">{{ $errors->first('image_title['.$locale->code.']') }}</div>
                                                 @endif
@@ -84,6 +85,11 @@
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="col-md-12 mb-3">
+                                            @if($question->video)
+                                                <div class="mb-2">
+                                                    <video src="{{asset('storage/'.$question->video)}}" controls width="100%" height="240"></video>
+                                                </div>
+                                            @endif
                                             <label for="video">{{ __('validation.attributes.video') }}</label>
                                             <input type="file" class="form-control" id="video"
                                                    name="video" value="{{ old('video') }}">
@@ -98,6 +104,9 @@
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="col-md-12 mb-3">
+                                            @if($question->bgImage)
+                                                <div class="mb-2"><img class="img-thumbnail" width="100" src="{{asset('storage/'.$question->bgImage)}}" alt=""></div>
+                                            @endif
                                             <label for="bg_image">{{ __('validation.attributes.image') }}</label>
                                             <input type="file" class="form-control" id="bg_image"
                                                    name="bg_image" value="{{ old('bg_image') }}">
@@ -115,7 +124,7 @@
                         <select class="form-control" id="type" name="type" required>
                             <option selected disabled>{{ __('form.choose') }} {{ __('validation.attributes.type') }}</option>
                             @foreach($types as $type)
-                                <option value="{{$type->value}}" @selected(old('type') == $type->value)>{{ $type->name }}</option>
+                                <option value="{{$type->value}}" @selected(old('type', $question->type) == $type->value)>{{ $type->name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('type'))
@@ -141,33 +150,6 @@
             </div>
         </div>
     </form>
-    <div class="modal" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_1" style="display: none;" aria-hidden="true" data-option="">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel_1">@lang('form.choose') @lang('content.question')</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="ion-ios-close-empty"></i></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input class="form-control mb-2" type="search" name="title" id="questionTitle" placeholder="Search" value="">
-                    <select class="form-control" name="question" id="selectBlock" required>
-                        <option value="">@lang('form.choose') @lang('content.question')</option>
-                        @foreach($allQuestions as $question)
-                            <option class="nextQuestion" value="{{$question->id}}">{{$question->title}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <a href="{{ route("questions.create") }}" class="btn btn-outline-success">
-                        <i class="fa fa-plus button-2x"> {{ __('form.add') }} {{__('form.new')}} {{ __('content.question') }}</i></a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('form.close')</button>
-                    <button type="button" class="btn btn-primary" id="addNextQuestion">@lang('form.save')</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('js')
     <script>
@@ -179,16 +161,13 @@
             const radioBlock = `<div class="card shadow-1 type_block radio_block mb-2">
                         <div class="card-header">
                             <h4 class="card-header-title"><span class="option_counter">1</span> @lang('content.option')</h4>
-                            <button type="button" class="btn btn-outline-success addInQuestion mr-2" data-option="1">
-                                <i class="fa fa-plus button-2x"> {{ __('form.add') }} {{ __('content.in_question') }}</i>
-                            </button>
+                            <div class="btn btn-outline-success mr-2"><i class="fa fa-plus button-2x">{{ __('form.add') }} {{ __('content.in_question') }}</i></div>
                             <div class="card-header-btn">
                                 <div class="collapse_btn btn btn-info"><i class="ion-ios-arrow-down"></i></div>
                                 <div class="delete_btn btn btn-danger"><i class="ion-ios-trash-outline"></i></div>
                             </div>
                         </div>
                         <div class="card-body collapse show">
-                            <input type="hidden" name="next_question_id[]" class="next_question_id" value="">
                             <div class="form-row">
                                 @foreach($locales as $locale)
             <div class="col-6">
@@ -204,23 +183,19 @@
             </div>
 @endforeach
             </div>
-            <div class="nextQuestionLink"></div>
         </div>
     </div>`
 
             const multipleBlock = `<div class="card shadow-1 type_block multiple_block mb-2">
                         <div class="card-header">
                             <h4 class="card-header-title"><span class="option_counter">1</span> @lang('content.option')</h4>
-                            <button type="button" class="btn btn-outline-success addInQuestion mr-2" data-option="1">
-                                <i class="fa fa-plus button-2x"> {{ __('form.add') }} {{ __('content.in_question') }}</i>
-                            </button>
+                            <div class="btn btn-outline-success mr-2"><i class="fa fa-plus button-2x">{{ __('form.add') }} {{ __('content.in_question') }}</i></div>
                             <div class="card-header-btn">
                                 <div class="collapse_btn btn btn-info"><i class="ion-ios-arrow-down"></i></div>
                                 <div class="delete_btn btn btn-danger"><i class="ion-ios-trash-outline"></i></div>
                             </div>
                         </div>
                         <div class="card-body collapse show">
-                            <input type="hidden" name="next_question_id[]" class="next_question_id" value="">
                             <div class="form-row">
                                 @foreach($locales as $locale)
             <div class="col-6">
@@ -236,7 +211,6 @@
             </div>
 @endforeach
             </div>
-            <div class="nextQuestionLink"></div>
         </div>
     </div>`
 
@@ -245,22 +219,19 @@
                             <h4 class="card-header-title">@lang('content.option')</h4>
                         </div>
                         <div class="card-body collapse show">
-                            <p>@lang('content.text_type')</p>
+                            <p>Text tipida ishtirokchining javobi yozma tarzda kiritiladi. Variantlar bo'lmaydi !!!?</p>
                         </div>
                     </div>`;
             const imageBlock = `<div class="card shadow-1 type_block image_block mb-2">
                         <div class="card-header">
                             <h4 class="card-header-title"><span class="option_counter">1</span> @lang('content.option')</h4>
-                            <button type="button" class="btn btn-outline-success addInQuestion mr-2" data-option="1">
-                                <i class="fa fa-plus button-2x"> {{ __('form.add') }} {{ __('content.in_question') }}</i>
-                            </button>
+                            <div class="btn btn-outline-success mr-2"><i class="fa fa-plus button-2x">{{ __('form.add') }} {{ __('content.in_question') }}</i></div>
                             <div class="card-header-btn">
                                 <div class="collapse_btn btn btn-info"><i class="ion-ios-arrow-down"></i></div>
                                 <div class="delete_btn btn btn-danger"><i class="ion-ios-trash-outline"></i></div>
                             </div>
                         </div>
                         <div class="card-body collapse show">
-                            <input type="hidden" name="next_question_id[]" class="next_question_id" value="">
                             <div class="form-row">
                                 <div class="col-md-12 mb-3">
                                     <label for="option_image">{{ __('validation.attributes.image') }}</label>
@@ -285,7 +256,6 @@
             </div>
 @endforeach
             </div>
-            <div class="nextQuestionLink"></div>
         </div>
     </div>`
 
@@ -333,7 +303,6 @@
                         let newName = name.replace(/\[\d+\]/, `[${count + 1}]`);
                         $(this).attr('name', newName);
                     })
-                    cloneElement.find('.addInQuestion').data('option', count + 1);
                     $('#options_block').append(cloneElement);
                 }
             })
@@ -352,56 +321,9 @@
                             let newName = name.replace(/\[\d+\]/, `[${i + 1}]`);
                             $(this).attr('name', newName);
                         });
-                        $(this).find('.addInQuestion').each(function () {
-                            $(this).data('option', i + 1).attr('data-option', i + 1);
-                        });
                     });
                 }
             });
-
-            $("#questionTitle").keyup(function (){
-                const title = $(this).val().toLowerCase();
-                $('.nextQuestion').each(function () {
-                    let optionText = $(this).text().toLowerCase();
-                    if (optionText.includes(title.toLowerCase()) || title === "") {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            });
-            var myModal = new bootstrap.Modal(document.getElementById('m_modal_1'));
-            const modal = $("#m_modal_1")
-            $(document).on('click', '.addInQuestion', function () {
-                const option = $(this).data('option');
-                console.log('btn option', option)
-                modal.data('option', option);
-                myModal.show();
-            });
-
-            $("#addNextQuestion").click(function (){
-                const option = modal.data('option')
-                console.log('modal option', option)
-                const questionId = $("#selectBlock").val()
-                let url = '{{ route("questions.show", ":id") }}';
-                url = url.replace(':id', questionId);
-                const nextQuestionLink = `<div class="mt-3">
-                                            <span>@lang('content.next_question'): </span>
-                                            <a target="_blank" href="${url}">${$("#selectBlock option:selected").text()}</a>
-                                        </div>`
-                console.log('block:', $('.addInQuestion[data-option="' + option + '"]'))
-                $('.addInQuestion').each(function () {
-                    console.log('data', $(this).data('option'))
-                    if($(this).data('option') === option) {
-                        $(this).closest('.type_block').find('.next_question_id').val(questionId)
-                        $(this).closest('.type_block').find('.nextQuestionLink').html(nextQuestionLink)
-                        $("#selectBlock").val('')
-                        console.log('value:', $(this).closest('.type_block').find('.next_question_id').val())
-                    }
-                });
-                myModal.hide();
-            })
-
         });
     </script>
 @endsection

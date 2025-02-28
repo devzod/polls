@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -6,7 +7,6 @@ use Akbarali\ViewModel\PaginationViewModel;
 use App\ActionData\Question\CreateQuestionActionData;
 use App\Enums\QuestionTypeEnum;
 use App\Filters\Question\QuestionSearchFilter;
-use App\Models\Question;
 use App\Services\LanguageService;
 use App\Services\PollService;
 use App\Services\QuestionService;
@@ -45,7 +45,8 @@ class QuestionController extends Controller
         $poll = $this->pollService->getPollLocale($pollId);
         $questions = $this->service->getPollQuestions($pollId, page: (int)$request->get('page'), limit: (int)$request->get('limit', 10), filters: $filters);
         $types = QuestionTypeEnum::cases();
-        return (new PaginationViewModel($questions, QuestionViewModel::class))->toView('admin.polls.questions', compact('poll', 'types'));
+        $allQuestions = $this->service->getAll();
+        return (new PaginationViewModel($questions, QuestionViewModel::class))->toView('admin.polls.questions', compact('poll', 'types', 'allQuestions'));
     }
 
     /**
@@ -56,11 +57,17 @@ class QuestionController extends Controller
         return view('admin.questions.constructor');
     }
 
-    public function create(): View
+    /**
+     * @param int|null $pollId
+     * @return View
+     */
+    public function create(int|null $pollId = null): View
     {
         $locales = $this->languageService->getAll();
         $types = QuestionTypeEnum::cases();
-        return view('admin.questions.create', compact( 'locales', 'types'));
+        $poll = $pollId ? $this->pollService->getPollLocale($pollId) : null;
+        $allQuestions = $this->service->getAll();
+        return view('admin.questions.create', compact( 'locales', 'types', 'poll', 'allQuestions'));
     }
 
     /**
@@ -73,6 +80,29 @@ class QuestionController extends Controller
         $this->service->storeQuestion($actionData);
         return redirect()->route('questions.index')
             ->with('success', trans('form.success_create', ['attribute' => trans('content.question')]));
+    }
+
+    /**
+     * @param int $id
+     * @return View
+     */
+    public function show(int $id): View
+    {
+       $question = $this->service->getQuestionAdmin($id);
+
+       return view('admin.questions.show', compact('question'));
+    }
+
+    /**
+     * @param int $id
+     * @return View
+     */
+    public function edit(int $id): View
+    {
+        $question = $this->service->getQuestionAdmin($id);
+        $locales = $this->languageService->getAll();
+        $types = QuestionTypeEnum::cases();
+        return view('admin.questions.edit', compact( 'locales', 'types', 'question'));
     }
 
     /**

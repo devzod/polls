@@ -13,6 +13,7 @@ use Illuminate\Http\UploadedFile;
  **/
 class CreateQuestionActionData extends ActionDataBase
 {
+    public int|null $poll_id;
     public array $title;
     public array|null $text;
     public UploadedFile|null $image;
@@ -23,8 +24,10 @@ class CreateQuestionActionData extends ActionDataBase
     public array|null $option_title;
     public array|null $option_image;
     public array|null $option_image_title;
+    public array|null $next_question_id;
 
     protected array $rules = [
+        "poll_id" => "nullable|integer|exists:polls,id",
         "title" => "required|array",
         "title.*" => "required|string",
         "text" => "nullable|array",
@@ -43,5 +46,7 @@ class CreateQuestionActionData extends ActionDataBase
         'option_image_title' => 'nullable|array',
         'option_image_title.*' => 'nullable|array',
         'option_image_title.*.*' => 'nullable|string',
+        'next_question_id' => 'nullable|array',
+        "next_question_id.*" => "nullable|integer|exists:questions,id",
     ];
 }

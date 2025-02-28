@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             QuestionTranslationSeeder::class,
             OptionSeeder::class,
             OptionTranslationSeeder::class,
+            PollQuestionSeeder::class,
         ]);
     }
 }

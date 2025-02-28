@@ -159,10 +159,6 @@ return [
     'my_profile' => 'Profilim',
     'download' => 'Yuklab olish',
     'upload' => 'Yuklash',
-    'submitted' => 'Topshirganlar'
-
-
-
-
-
+    'submitted' => 'Topshirganlar',
+    'new' => "yangi"
 ];

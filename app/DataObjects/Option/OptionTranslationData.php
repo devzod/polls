@@ -12,7 +12,7 @@ use Akbarali\DataObject\DataObjectBase;
  **/
 class OptionTranslationData extends DataObjectBase
 {
-    public string $title;
+    public string|null $title;
     public string|null $text;
     public string|null $imageTitle;
     public string $locale;

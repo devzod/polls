@@ -10,6 +10,7 @@ use App\DataObjects\Poll\PollTranslationsData;
 use App\DataObjects\TranslationData;
 use App\Enums\PollStatusEnum;
 use App\Models\Poll;
+use App\Models\PollQuestion;
 use App\Models\PollTranslation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
@@ -142,6 +143,27 @@ class PollService
             $poll->type = $actionData->type;
         }
         $poll->save();
+    }
+
+    /**
+     * @param int $pollId
+     * @param string $questionId
+     * @return void
+     */
+    public function addQuestion(int $pollId, string $questionId): void
+    {
+        $model = PollQuestion::query()->where('poll_id', $pollId)->where('question_id', $questionId)->first();
+        if(!$model) {
+            PollQuestion::query()->create([
+                'poll_id' => $pollId,
+                'question_id' => $questionId,
+            ]);
+        }
+    }
+
+    public function removeQuestion(int $pollId, int $questionId): void
+    {
+        PollQuestion::query()->where('poll_id', $pollId)->where('question_id', $questionId)->delete();
     }
 
     /**

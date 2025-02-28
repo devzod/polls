@@ -19,7 +19,9 @@ return [
     'questions' => "Questions",
     'question' => "Question",
     'in_question' => "Under question",
+    'next_question' => "Next under question",
     'options' => "Options",
     'option' => "Option",
     'image_title' => "Image Title",
+    'text_type' => "In Text type, the participant's answer is entered in writing. There will be no options !!!"
 ];

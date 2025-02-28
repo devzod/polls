@@ -8,8 +8,9 @@
                         <h5>{{$poll->title}}</h5>
                     </div>
                     @can('questions.store')
-                        <a href="{{ route("questions.create") }}" class="btn btn-outline-success">
-                            <i class="fa fa-plus button-2x"> {{ __('form.add') }} {{ __('content.question') }}</i></a>
+                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#m_modal_1">
+                            <i class="fa fa-plus button-2x"> {{ __('form.add') }} {{ __('content.question') }}</i>
+                        </button>
                     @endcan
                 </div>
                 <div class="card-body collapse show" id="collapse2">
@@ -91,7 +92,7 @@
                                                 <i class="fa fa-edit text-purple button-2x"></i></a>
                                         @endcan
                                         @can('questions.delete')
-                                            <a href="{{ route("questions.delete", [$item->id]) }}" class=""
+                                            <a href="{{ route("polls.removeQuestion", [$poll->id, $item->id]) }}" class=""
                                                onclick="return confirm(this.getAttribute('data-message'));"
                                                data-message="{{ __('table.confirm_delete') }}">
                                                 <i class="fa fa-trash-o text-danger button-2x"></i></a>
@@ -118,4 +119,50 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form class="modal-content" method="post" action="{{route('polls.addQuestion', $poll->id)}}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel_1">@lang('form.choose') @lang('content.question')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="ion-ios-close-empty"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control mb-2" type="search" name="title" id="questionTitle" placeholder="Search" value="">
+                    <select class="form-control" name="question" id="selectBlock" required>
+                        <option value="">@lang('form.choose') @lang('content.question')</option>
+                        @foreach($allQuestions as $question)
+                            <option value="{{$question->id}}">{{$question->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ route("questions.create", $poll->id) }}" class="btn btn-outline-success">
+                        <i class="fa fa-plus button-2x"> {{ __('form.add') }} {{__('form.new')}} {{ __('content.question') }}</i></a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('form.close')</button>
+                    <button type="submit" class="btn btn-primary">@lang('form.save')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function () {
+            $("#questionTitle").keyup(function (){
+                const title = $(this).val().toLowerCase();
+                $('#selectBlock option').each(function () {
+                    let optionText = $(this).text().toLowerCase();
+                    if (optionText.includes(title.toLowerCase()) || title === "") {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

@@ -152,5 +152,6 @@ return [
     'my_profile' => 'Мой профиль',
     'download' => 'Скачать',
     'upload' => 'Загрузить',
-    'submitted' => 'Поданный'
+    'submitted' => 'Поданный',
+    'new' => "новый"
 ];

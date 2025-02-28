@@ -16,7 +16,9 @@ return [
     'questions' => "Savollar",
     'question' => "Savol",
     'in_qestion' => "Ichki savol",
+    'next_question' => "Keyingi ichki savol",
     'options' => "Variantlar",
     'option' => "Variant",
     'image_title' => "Rasm izohi",
+    'text_type' => "Text tipida ishtirokchining javobi yozma tarzda kiritiladi. Variantlar bo'lmaydi !!!",
 ];

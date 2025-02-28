@@ -78,6 +78,32 @@ class PollController extends Controller
 
     /**
      * @param int $id
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function addQuestion(int $id, Request $request): RedirectResponse
+    {
+        $this->service->addQuestion($id, $request->get('question'));
+
+        return redirect()->back()
+            ->with('success', trans('form.success_create', ['attribute' => trans('content.question')]));
+    }
+
+    /**
+     * @param int $id
+     * @param int $questionId
+     * @return RedirectResponse
+     */
+    public function removeQuestion(int $id, int $questionId): RedirectResponse
+    {
+        $this->service->removeQuestion($id, $questionId);
+
+        return redirect()->back()
+            ->with('success', trans('form.success_delete', ['attribute' => trans('content.question')]));
+    }
+
+    /**
+     * @param int $id
      * @return RedirectResponse
      */
     public function delete(int $id): RedirectResponse

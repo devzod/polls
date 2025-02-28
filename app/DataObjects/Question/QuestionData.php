@@ -13,8 +13,7 @@ use Akbarali\DataObject\DataObjectBase;
 class QuestionData extends DataObjectBase
 {
     public int $id;
-    public int $poll_id;
-    public int $question_theme_id;
+    public int|null $question_theme_id;
     public string $type;
     public string|null $image;
     public string|null $bg_image;

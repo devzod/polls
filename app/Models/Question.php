@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Filters\Trait\EloquentFilterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
@@ -37,5 +39,10 @@ class Question extends Model
     public function options(): HasMany
     {
         return $this->hasMany(Option::class, 'question_id', 'id');
+    }
+
+    public function polls():BelongsToMany
+    {
+        return $this->belongsToMany(Poll::class, PollQuestion::class, 'question_id', 'poll_id');
     }
 }
